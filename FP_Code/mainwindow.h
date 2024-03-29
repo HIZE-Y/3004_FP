@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include <QDebug>
 #include <QMainWindow>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,10 +21,13 @@ private slots:
     void power();
     void on();
     void off();
+    void updateBattery();
+    void intil();
 
 private:
     Ui::MainWindow *ui;
     int battery;
     int state;
+    QTimer *timer;
 };
 #endif // MAINWINDOW_H

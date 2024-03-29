@@ -6,10 +6,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    intil();
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
     ui->Battery->setValue(100);
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
+
 }
+
+void MainWindow::intil(){
+state = 0;
+timer = new QTimer(this);
+timer->setInterval(10000);
+timer->start();}
+
 
 MainWindow::~MainWindow()
 {
@@ -23,6 +33,9 @@ void MainWindow:: start(){
 void MainWindow::on(){
     ui->Battery->setVisible(true);
     ui->Start->setVisible(true);
+//    timer = new QTimer(this);
+//    timer->setInterval(100);
+//    timer->start();
 
 }
 
@@ -52,4 +65,19 @@ void MainWindow::power(){
             off();
             state = 0; //device is turned off
         }
+        // add a state for when session is in progress to be used in updateBattery to decrease battery faster
+}
+
+
+
+void MainWindow::updateBattery(){
+    if(ui->Battery->value() != 0){
+        if(state == 1){
+            ui->Battery->setValue(ui->Battery->value() - 1);
+        }
+    }
+
+    else{ //battery is out, so act as if the devie has been turned off
+        off();
+    }
 }
