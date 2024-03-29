@@ -17,9 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::intil(){
 state = 0;
 timer = new QTimer(this);
-timer->setInterval(10000);
-timer->start();}
-
+timer->setInterval(100);
+timer->start();
+   qInfo()<<"HEY";}
 
 MainWindow::~MainWindow()
 {
