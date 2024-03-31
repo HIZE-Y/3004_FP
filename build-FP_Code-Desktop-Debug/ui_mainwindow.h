@@ -18,6 +18,7 @@
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +33,10 @@ public:
     QPushButton *log;
     QProgressBar *Battery;
     QDateTimeEdit *dateTimeEdit;
+    QPushButton *pushButton;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_2;
+    QTextBrowser *Histroylog;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -63,6 +68,18 @@ public:
         dateTimeEdit = new QDateTimeEdit(frame);
         dateTimeEdit->setObjectName(QString::fromUtf8("dateTimeEdit"));
         dateTimeEdit->setGeometry(QRect(340, 190, 194, 26));
+        pushButton = new QPushButton(frame);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(210, 140, 83, 25));
+        pushButton_3 = new QPushButton(frame);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(400, 140, 83, 25));
+        pushButton_2 = new QPushButton(frame);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(310, 140, 83, 25));
+        Histroylog = new QTextBrowser(frame);
+        Histroylog->setObjectName(QString::fromUtf8("Histroylog"));
+        Histroylog->setGeometry(QRect(20, 210, 256, 192));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -83,6 +100,9 @@ public:
         power->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         log->setText(QCoreApplication::translate("MainWindow", "Log", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "Pause", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Resume", nullptr));
     } // retranslateUi
 
 };
