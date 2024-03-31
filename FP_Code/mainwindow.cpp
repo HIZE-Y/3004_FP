@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QTextStream>
+#include <QCoreApplication>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,6 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
     ui->Battery->setValue(100);
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
+
+    QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
+    qInfo()<< filePath;
+    m_logHistory.setFileName(filePath);
+    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text)){
+        qDebug() << "Failed to open" << m_logHistory.errorString();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -18,6 +28,9 @@ MainWindow::~MainWindow()
 
 void MainWindow:: start(){
     qInfo()<<"HEY";
+    QString sessionEntry = "This is the first Session";
+    QTextStream out(&m_logHistory);
+    out << sessionEntry;
 }
 
 void MainWindow::on(){

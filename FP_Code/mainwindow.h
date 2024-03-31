@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include <QDebug>
 #include <QMainWindow>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,5 +26,6 @@ private:
     Ui::MainWindow *ui;
     int battery;
     int state;
+    QFile m_logHistory;
 };
 #endif // MAINWINDOW_H
