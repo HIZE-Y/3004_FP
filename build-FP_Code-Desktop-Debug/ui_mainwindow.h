@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -29,8 +30,8 @@ public:
     QPushButton *power;
     QPushButton *Start;
     QPushButton *log;
-    QPushButton *pushButton_4;
     QProgressBar *Battery;
+    QDateTimeEdit *dateTimeEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -55,13 +56,13 @@ public:
         log = new QPushButton(frame);
         log->setObjectName(QString::fromUtf8("log"));
         log->setGeometry(QRect(110, 180, 83, 25));
-        pushButton_4 = new QPushButton(frame);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setGeometry(QRect(110, 210, 83, 25));
         Battery = new QProgressBar(frame);
         Battery->setObjectName(QString::fromUtf8("Battery"));
         Battery->setGeometry(QRect(30, 10, 118, 23));
         Battery->setValue(24);
+        dateTimeEdit = new QDateTimeEdit(frame);
+        dateTimeEdit->setObjectName(QString::fromUtf8("dateTimeEdit"));
+        dateTimeEdit->setGeometry(QRect(340, 190, 194, 26));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -82,7 +83,6 @@ public:
         power->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         log->setText(QCoreApplication::translate("MainWindow", "Log", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "set ", nullptr));
     } // retranslateUi
 
 };

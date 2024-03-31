@@ -9,9 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    intil();
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
     ui->Battery->setValue(100);
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
+<<<<<<< HEAD
 
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
     qInfo()<< filePath;
@@ -19,7 +21,18 @@ MainWindow::MainWindow(QWidget *parent)
     if (!m_logHistory.open(QIODevice::Append | QIODevice::Text)){
         qDebug() << "Failed to open" << m_logHistory.errorString();
     }
+=======
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
+
+>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
 }
+
+void MainWindow::intil(){
+state = 0;
+timer = new QTimer(this);
+timer->setInterval(100);
+timer->start();
+   qInfo()<<"HEY";}
 
 MainWindow::~MainWindow()
 {
@@ -36,6 +49,9 @@ void MainWindow:: start(){
 void MainWindow::on(){
     ui->Battery->setVisible(true);
     ui->Start->setVisible(true);
+//    timer = new QTimer(this);
+//    timer->setInterval(100);
+//    timer->start();
 
 }
 
@@ -65,4 +81,19 @@ void MainWindow::power(){
             off();
             state = 0; //device is turned off
         }
+        // add a state for when session is in progress to be used in updateBattery to decrease battery faster
+}
+
+
+
+void MainWindow::updateBattery(){
+    if(ui->Battery->value() != 0){
+        if(state == 1){
+            ui->Battery->setValue(ui->Battery->value() - 1);
+        }
+    }
+
+    else{ //battery is out, so act as if the devie has been turned off
+        off();
+    }
 }
