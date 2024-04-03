@@ -28,15 +28,15 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QFrame *frame;
-    QPushButton *power;
     QPushButton *Start;
     QPushButton *log;
     QProgressBar *Battery;
     QDateTimeEdit *dateTimeEdit;
     QPushButton *pushButton;
-    QPushButton *pushButton_3;
+    QPushButton *stopButton;
     QPushButton *pushButton_2;
     QTextBrowser *Histroylog;
+    QPushButton *power;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -44,7 +44,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->resize(942, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         frame = new QFrame(centralwidget);
@@ -52,9 +52,6 @@ public:
         frame->setGeometry(QRect(70, 20, 701, 451));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        power = new QPushButton(frame);
-        power->setObjectName(QString::fromUtf8("power"));
-        power->setGeometry(QRect(552, 20, 121, 31));
         Start = new QPushButton(frame);
         Start->setObjectName(QString::fromUtf8("Start"));
         Start->setGeometry(QRect(110, 140, 83, 25));
@@ -71,19 +68,22 @@ public:
         pushButton = new QPushButton(frame);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(210, 140, 83, 25));
-        pushButton_3 = new QPushButton(frame);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(400, 140, 83, 25));
+        stopButton = new QPushButton(frame);
+        stopButton->setObjectName(QString::fromUtf8("stopButton"));
+        stopButton->setGeometry(QRect(400, 140, 83, 25));
         pushButton_2 = new QPushButton(frame);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(310, 140, 83, 25));
         Histroylog = new QTextBrowser(frame);
         Histroylog->setObjectName(QString::fromUtf8("Histroylog"));
         Histroylog->setGeometry(QRect(20, 210, 256, 192));
+        power = new QPushButton(centralwidget);
+        power->setObjectName(QString::fromUtf8("power"));
+        power->setGeometry(QRect(780, 30, 121, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 942, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -97,12 +97,12 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        power->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         log->setText(QCoreApplication::translate("MainWindow", "Log", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Pause", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
+        stopButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Resume", nullptr));
+        power->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
     } // retranslateUi
 
 };

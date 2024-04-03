@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>942</width>
     <height>600</height>
    </rect>
   </property>
@@ -29,19 +29,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="power">
-     <property name="geometry">
-      <rect>
-       <x>552</x>
-       <y>20</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Power</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="Start">
      <property name="geometry">
       <rect>
@@ -104,7 +91,7 @@
       <string>Pause</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="stopButton">
      <property name="geometry">
       <rect>
        <x>400</x>
@@ -141,13 +128,26 @@
      </property>
     </widget>
    </widget>
+   <widget class="QPushButton" name="power">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>30</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Power</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>942</width>
      <height>22</height>
     </rect>
    </property>

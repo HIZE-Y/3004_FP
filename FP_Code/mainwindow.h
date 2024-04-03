@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QFile>
+#include <QDateTimeEdit>
 //=======
 #include <QTimer>
 //>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
@@ -27,15 +28,19 @@ private slots:
     void off();
     void updateBattery();
     void intil();
+    void dataEntry();
+    void stop();
+    void pause();
 
 private:
     Ui::MainWindow *ui;
     int battery;
     int state;
-
+    int counter;
     QFile m_logHistory;
-
+    QTimer *timer2;
     QTimer *timer;
-//>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
+    QTimer  *timer3;
+
 };
 #endif // MAINWINDOW_H

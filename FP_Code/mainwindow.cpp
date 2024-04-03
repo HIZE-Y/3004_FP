@@ -12,29 +12,43 @@ MainWindow::MainWindow(QWidget *parent)
     intil();
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
     ui->Battery->setValue(100);
+    ui->Battery->setVisible(false);
+    ui->frame->setVisible(false);
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
-   connect(ui->log,&QPushButton::clicked, [this]() { log(); });
+    connect(ui->log,&QPushButton::clicked, [this]() { log(); });
+   connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
+   connect(ui->Pause,&QPushButton::clicked, [this]() { pause(); });
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
     qInfo()<< filePath;
 
     m_logHistory.setFileName(filePath);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
+    connect(timer2, SIGNAL(timeout()), this, SLOT(dataEntry()));
+    connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
+
+
+
 }
 
 void MainWindow::intil(){
-state = 0;
-timer = new QTimer(this);
-timer->setInterval(100);
-timer->start();
-   qInfo()<<"HEY";}
-
+    counter=0;
+    state = 0;
+    timer = new QTimer(this);
+    timer2 = new QTimer(this);
+    timer2->setInterval(1000);
+    timer3 = new QTimer(this);
+    timer3->setInterval(1000);
+    timer->setInterval(1000);
+    timer->start();
+   qInfo()<<"HEY";
+}
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-\
+
 void MainWindow::log(){
 
     if (m_logHistory.isOpen()) {
@@ -60,25 +74,54 @@ void MainWindow:: start(){
     if (m_logHistory.isOpen()) {
             m_logHistory.close();
         }
-     QFile file("history.txt");
-    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
-            qDebug() << "Failed to open" << m_logHistory.errorString();
-        }
-    qInfo()<<"HEY";
-    QString sessionEntry = "\n You are welcome ";
-    QTextStream out(&m_logHistory);
-    out << sessionEntry;
+
+    timer2->start();
+//     QFile file("history.txt");
+//    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
+//            qDebug() << "Failed to open" << m_logHistory.errorString();
+//        }
+//    qInfo()<<"HEY";
+//    QString sessionEntry = "\n You are welcome ";
+//    QTextStream out(&m_logHistory);
+//    out << sessionEntry;
+
+}
+
+
+void MainWindow::dataEntry(){
+   // timer->stop(  if(timer==0)
+    qInfo()<<"HEY2";
+    counter++;
+    if(counter==3){
+       qInfo()<<"Reached 21";
+    timer2->stop();    }
+     qInfo()<<counter;
+}
+
+void MainWindow::stop(){
+   timer2->stop();//stops the session
+   counter=0;
+   qInfo()<< "Test: Stop";
+
+}
+void MainWindow::pause(){
+    timer2->stop();
+    timer3->start();
 }
 
 void MainWindow::on(){
     ui->Battery->setVisible(true);
     ui->Start->setVisible(true);
+    ui->frame->setVisible(true);
 
 }
 
 void MainWindow::off(){
     ui->Battery->setVisible(false);
     ui->Start->setVisible(false);
+    ui->frame->setVisible(false);
+    timer2->stop();//stops the session
+    counter=0;
 }
 
 
