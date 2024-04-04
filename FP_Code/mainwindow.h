@@ -31,6 +31,8 @@ private slots:
     void dataEntry();
     void stop();
     void pause();
+    void resume();
+    void updateProgressBar();
 
 private:
     Ui::MainWindow *ui;

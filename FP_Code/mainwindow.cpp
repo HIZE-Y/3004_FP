@@ -14,16 +14,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Battery->setValue(100);
     ui->Battery->setVisible(false);
     ui->frame->setVisible(false);
+    ui->SessionPr->setValue(0);
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
     connect(ui->log,&QPushButton::clicked, [this]() { log(); });
-   connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
-   connect(ui->Pause,&QPushButton::clicked, [this]() { pause(); });
+    connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
+
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
     qInfo()<< filePath;
 
     m_logHistory.setFileName(filePath);
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
+    connect(timer2, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(timer2, SIGNAL(timeout()), this, SLOT(dataEntry()));
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
 
@@ -92,7 +94,7 @@ void MainWindow::dataEntry(){
    // timer->stop(  if(timer==0)
     qInfo()<<"HEY2";
     counter++;
-    if(counter==3){
+    if(counter==21){
        qInfo()<<"Reached 21";
     timer2->stop();    }
      qInfo()<<counter;
@@ -101,12 +103,20 @@ void MainWindow::dataEntry(){
 void MainWindow::stop(){
    timer2->stop();//stops the session
    counter=0;
+   ui->SessionPr->setValue(0);
    qInfo()<< "Test: Stop";
 
 }
 void MainWindow::pause(){
     timer2->stop();
     timer3->start();
+    state = 2;
+}
+
+void MainWindow::resume(){
+    timer3->stop();
+    timer2->start();
+    state = 1;
 }
 
 void MainWindow::on(){
@@ -160,4 +170,17 @@ void MainWindow::updateBattery(){
     else{ //battery is out, so act as if the devie has been turned off
         off();
     }
+}
+
+void MainWindow::updateProgressBar(){
+    int progress = (counter * 100) / 21;
+    ui->SessionPr->setValue(progress);
+
+    // session ends
+    if(counter == 21){
+        counter = 0;
+        ui->SessionPr->setValue(0); // reset progress bar
+        timer2->stop(); // stop session timer
+    }
+
 }
