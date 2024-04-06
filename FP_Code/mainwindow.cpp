@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
     connect(ui->log,&QPushButton::clicked, [this]() { log(); });
     connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
+    //connect(ui->dateTimeEdit,&QDateTimeEdit::dateTimeChanged, [this] {start();});
 
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
     qInfo()<< filePath;
@@ -77,15 +78,19 @@ void MainWindow:: start(){
             m_logHistory.close();
         }
 
+    QDateTime sessionStartDateTime = ui->dateTimeEdit->dateTime();
+    QString sessionStartStr = sessionStartDateTime.toString("yyyy-MM-dd HH:mm");
+
+
     timer2->start();
-//     QFile file("history.txt");
-//    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
-//            qDebug() << "Failed to open" << m_logHistory.errorString();
-//        }
-//    qInfo()<<"HEY";
-//    QString sessionEntry = "\n You are welcome ";
-//    QTextStream out(&m_logHistory);
-//    out << sessionEntry;
+     QFile file("history.txt");
+    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
+            qDebug() << "Failed to open" << m_logHistory.errorString();
+        }
+    qInfo()<<"added to the history log";
+    QString sessionEntry = "the result of the session that you start it at: " + sessionStartStr + "\n";
+    QTextStream out(&m_logHistory);
+    out << sessionEntry;
 
 }
 

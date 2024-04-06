@@ -80,14 +80,14 @@ public:
         pushButton_2->setGeometry(QRect(310, 140, 83, 25));
         Histroylog = new QTextBrowser(frame);
         Histroylog->setObjectName(QString::fromUtf8("Histroylog"));
-        Histroylog->setGeometry(QRect(20, 210, 256, 192));
+        Histroylog->setGeometry(QRect(10, 220, 381, 192));
         SessionPr = new QProgressBar(frame);
         SessionPr->setObjectName(QString::fromUtf8("SessionPr"));
-        SessionPr->setGeometry(QRect(350, 280, 118, 23));
+        SessionPr->setGeometry(QRect(410, 280, 118, 23));
         SessionPr->setValue(24);
         label = new QLabel(frame);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(350, 310, 121, 17));
+        label->setGeometry(QRect(410, 310, 121, 17));
         label_2 = new QLabel(frame);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(60, 40, 62, 17));

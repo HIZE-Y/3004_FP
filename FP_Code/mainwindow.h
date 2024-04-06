@@ -40,6 +40,7 @@ private:
     int state;
     int counter;
     QFile m_logHistory;
+    QDateTimeEdit dateTimeEdit;
     QTimer *timer2;
     QTimer *timer;
     QTimer  *timer3;
