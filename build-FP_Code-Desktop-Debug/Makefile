@@ -53,9 +53,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../FP_Code/main.cpp \
-		../FP_Code/mainwindow.cpp moc_mainwindow.cpp
+		../FP_Code/mainwindow.cpp \
+		../FP_Code/signaldata.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		signaldata.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -135,8 +137,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../FP_Code/FP_Code.pro ../FP_Code/mainwindow.h ../FP_Code/main.cpp \
-		../FP_Code/mainwindow.cpp
+		../FP_Code/FP_Code.pro ../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h ../FP_Code/main.cpp \
+		../FP_Code/mainwindow.cpp \
+		../FP_Code/signaldata.cpp
 QMAKE_TARGET  = FP_Code
 DESTDIR       = 
 TARGET        = FP_Code
@@ -322,8 +326,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/mainwindow.h ../FP_Code/signaldata.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp ../FP_Code/signaldata.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../FP_Code/mainwindow.ui $(DISTDIR)/
 
 
@@ -360,6 +364,7 @@ compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Lead_programer/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Lead_programer/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/mainwindow.h -o moc_mainwindow.cpp
@@ -385,12 +390,17 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: ../FP_Code/main.cpp ../FP_Code/mainwindow.h
+main.o: ../FP_Code/main.cpp ../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FP_Code/main.cpp
 
 mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FP_Code/mainwindow.cpp
+
+signaldata.o: ../FP_Code/signaldata.cpp ../FP_Code/signaldata.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signaldata.o ../FP_Code/signaldata.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

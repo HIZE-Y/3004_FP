@@ -32,9 +32,59 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-}
 
+}
+void MainWindow::inputData(){
+    SignalData signalArray[3];//Alpha
+    signalArray[0] = SignalData(440.0, 8.0);
+    signalArray[1] = SignalData(880.0, 10.8);
+    signalArray[2] = SignalData(880.0, 11.8);
+    SignalData signalArray2[3];//Beta Wave
+    signalArray2[0] = SignalData(440.0, 12.0);
+    signalArray2[1] = SignalData(880.0, 15.8);
+    signalArray2[2] = SignalData(880.0, 20.8);
+    SignalData signalArray3[3];//theta
+    signalArray3[0] = SignalData(440.0, 8.0);
+    signalArray3[1] = SignalData(880.0, 4.8);
+    signalArray3[2] = SignalData(880.0, 5.8);
+    SignalData signalArray4[3];//gamma
+    signalArray4[0] = SignalData(440.0, 25.0);
+    signalArray4[1] = SignalData(880.0, 30.8);
+    signalArray4[2] = SignalData(880.0, 90.8);
+    SignalData signalArray5[3];//alpha
+    signalArray5[0] = SignalData(440.0, 8.0);
+    signalArray5[1] = SignalData(880.0, 11.8);
+    signalArray5[2] = SignalData(880.0, 9.8);
+    SignalData signalArray6[3];//theta
+    signalArray6[0] = SignalData(440.0, 4.50);
+    signalArray6[1] = SignalData(880.0, 5.8);
+    signalArray6[2] = SignalData(880.0, 6.8);
+    SignalData signalArray7[3];// Beta
+    signalArray7[0] = SignalData(440.0, 12.0);
+    signalArray7[1] = SignalData(880.0, 13.8);
+    signalArray7[2] = SignalData(880.0, 19.8);
+
+
+};
+double MainWindow::math(SignalData t[], int size) {
+    double numerator = 0.0;
+    double denominator = 0.0;
+
+    for (int i = 0; i < size; ++i) {
+        numerator += t[i].frequency * pow(t[i].amplitude, 2);
+        denominator += pow(t[i].amplitude, 2);
+    }
+        qInfo()<<"Feq"<<t[1].frequency;
+    if (denominator == 0) {
+        qWarning() << "Denominator is zero, cannot divide by zero.";
+        return -1; // Handle this error as appropriate
+    }
+
+    return numerator / denominator;
+}
 void MainWindow::intil(){
+    inputData();
+
     counter=0;
     state = 0;
     timer = new QTimer(this);
@@ -44,7 +94,7 @@ void MainWindow::intil(){
     timer3->setInterval(1000);
     timer->setInterval(1000);
     timer->start();
-   qInfo()<<"HEY";
+
 }
 MainWindow::~MainWindow()
 {
@@ -74,6 +124,8 @@ void MainWindow::log(){
             m_logHistory.close();
 }
 void MainWindow:: start(){
+    double dp = math(&signalArray4, 3);
+        qInfo() << "Dominant Frequency: " << dp << " Hz";
     if (m_logHistory.isOpen()) {
             m_logHistory.close();
         }
@@ -97,7 +149,6 @@ void MainWindow:: start(){
 
 void MainWindow::dataEntry(){
    // timer->stop(  if(timer==0)
-    qInfo()<<"HEY2";
     counter++;
     if(counter==21){
        qInfo()<<"Reached 21";
@@ -178,14 +229,16 @@ void MainWindow::updateBattery(){
 }
 
 void MainWindow::updateProgressBar(){
-    int progress = (counter * 100) / 21;
+    int progress = (counter * 100) / 7;
     ui->SessionPr->setValue(progress);
 
     // session ends
-    if(counter == 21){
-        counter = 0;
-        ui->SessionPr->setValue(0); // reset progress bar
-        timer2->stop(); // stop session timer
+    if(counter == 7){
+        ui->SessionPr->setValue(100);
+        stop();
     }
 
 }
+
+
+

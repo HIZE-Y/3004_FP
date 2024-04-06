@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    signaldata.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    signaldata.h
 
 FORMS += \
     mainwindow.ui

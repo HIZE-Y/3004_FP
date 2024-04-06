@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QDateTimeEdit>
+#include "signaldata.h"
+#include "math.h"
 //=======
 #include <QTimer>
 //>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
@@ -33,6 +35,8 @@ private slots:
     void pause();
     void resume();
     void updateProgressBar();
+    void inputData();
+    double math(SignalData array[], int size);
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +48,13 @@ private:
     QTimer *timer2;
     QTimer *timer;
     QTimer  *timer3;
+    SignalData signalArray;
+    SignalData signalArray2;
+    SignalData signalArray3;
+    SignalData signalArray4;
+    SignalData signalArray5;
+    SignalData signalArray6;
+    SignalData signalArray7;
 
 };
 #endif // MAINWINDOW_H
