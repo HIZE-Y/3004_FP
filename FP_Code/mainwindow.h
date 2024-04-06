@@ -43,6 +43,7 @@ private:
     int battery;
     int state;
     int counter;
+    double fd[7];
     QFile m_logHistory;
     QDateTimeEdit dateTimeEdit;
     QTimer *timer2;

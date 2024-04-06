@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
 
 
-
+    inputData();
 
 }
 void MainWindow::inputData(){
@@ -39,10 +39,12 @@ void MainWindow::inputData(){
     signalArray[0] = SignalData(440.0, 8.0);
     signalArray[1] = SignalData(880.0, 10.8);
     signalArray[2] = SignalData(880.0, 11.8);
+
     SignalData signalArray2[3];//Beta Wave
     signalArray2[0] = SignalData(440.0, 12.0);
     signalArray2[1] = SignalData(880.0, 15.8);
     signalArray2[2] = SignalData(880.0, 20.8);
+
     SignalData signalArray3[3];//theta
     signalArray3[0] = SignalData(440.0, 8.0);
     signalArray3[1] = SignalData(880.0, 4.8);
@@ -64,17 +66,23 @@ void MainWindow::inputData(){
     signalArray7[1] = SignalData(880.0, 13.8);
     signalArray7[2] = SignalData(880.0, 19.8);
 
-
+    fd[0] = math(signalArray, 3);
+    fd[1] = math(signalArray2, 3);
+    fd[2] = math(signalArray3, 3);
+    fd[3] = math(signalArray4, 3);
+    fd[4] = math(signalArray5, 3);
+    fd[5] = math(signalArray6, 3);
+    fd[6] = math(signalArray7, 3);
 };
 double MainWindow::math(SignalData t[], int size) {
     double numerator = 0.0;
     double denominator = 0.0;
 
     for (int i = 0; i < size; ++i) {
-        numerator += t[i].frequency * pow(t[i].amplitude, 2);
-        denominator += pow(t[i].amplitude, 2);
+        numerator += t[i].frequency * (t[i].amplitude * t[i].amplitude);
+        denominator += (t[i].amplitude * t[i].amplitude);
     }
-        qInfo()<<"Feq"<<t[1].frequency;
+
     if (denominator == 0) {
         qWarning() << "Denominator is zero, cannot divide by zero.";
         return -1; // Handle this error as appropriate
@@ -124,8 +132,10 @@ void MainWindow::log(){
             m_logHistory.close();
 }
 void MainWindow:: start(){
-    double dp = math(&signalArray4, 3);
-        qInfo() << "Dominant Frequency: " << dp << " Hz";
+
+    for (int i = 0; i <7; i++){
+        qInfo() << "Dominant Frequency: " << fd[i] << " Hz";
+    }
     if (m_logHistory.isOpen()) {
             m_logHistory.close();
         }
