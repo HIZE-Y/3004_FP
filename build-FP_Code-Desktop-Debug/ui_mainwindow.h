@@ -20,6 +20,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -40,7 +41,14 @@ public:
     QProgressBar *SessionPr;
     QLabel *label;
     QLabel *label_2;
+    QLabel *label_3;
     QPushButton *power;
+    QPushButton *Disconnect;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLabel *lightIndicatorRed;
+    QLabel *lightIndicatorBlue;
+    QLabel *lightIndicatorGreen;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -91,9 +99,36 @@ public:
         label_2 = new QLabel(frame);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(60, 40, 62, 17));
+        label_3 = new QLabel(frame);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(230, 20, 62, 17));
         power = new QPushButton(centralwidget);
         power->setObjectName(QString::fromUtf8("power"));
         power->setGeometry(QRect(780, 30, 121, 31));
+        Disconnect = new QPushButton(centralwidget);
+        Disconnect->setObjectName(QString::fromUtf8("Disconnect"));
+        Disconnect->setGeometry(QRect(790, 130, 83, 25));
+        verticalLayoutWidget = new QWidget(centralwidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(780, 330, 160, 80));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        lightIndicatorRed = new QLabel(verticalLayoutWidget);
+        lightIndicatorRed->setObjectName(QString::fromUtf8("lightIndicatorRed"));
+
+        verticalLayout->addWidget(lightIndicatorRed);
+
+        lightIndicatorBlue = new QLabel(verticalLayoutWidget);
+        lightIndicatorBlue->setObjectName(QString::fromUtf8("lightIndicatorBlue"));
+
+        verticalLayout->addWidget(lightIndicatorBlue);
+
+        lightIndicatorGreen = new QLabel(verticalLayoutWidget);
+        lightIndicatorGreen->setObjectName(QString::fromUtf8("lightIndicatorGreen"));
+
+        verticalLayout->addWidget(lightIndicatorGreen);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -118,7 +153,12 @@ public:
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Resume", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Session Progress", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Battery", nullptr));
+        label_3->setText(QString());
         power->setText(QCoreApplication::translate("MainWindow", "Power", nullptr));
+        Disconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
+        lightIndicatorRed->setText(QString());
+        lightIndicatorBlue->setText(QString());
+        lightIndicatorGreen->setText(QString());
     } // retranslateUi
 
 };

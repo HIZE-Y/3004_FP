@@ -34,8 +34,10 @@ private slots:
     void stop();
     void pause();
     void resume();
+    void disconnect();
     void updateProgressBar();
     void inputData();
+    void updateLightIndicator(const QString &color, bool);
     double math(SignalData array[], int size);
 
 private:

@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     intil();
+    updateLightIndicator("#00FF00", false); // Turn off the green light
+    updateLightIndicator("#0000FF", false); // Turn off the blue light
+    updateLightIndicator("#FF0000", false); // Turn off the red light
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
     ui->Battery->setValue(100);
     ui->Battery->setVisible(false);
@@ -18,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
     connect(ui->log,&QPushButton::clicked, [this]() { log(); });
     connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
+    connect(ui->Disconnect,&QPushButton::clicked, [this]() { disconnect(); });
     //connect(ui->dateTimeEdit,&QDateTimeEdit::dateTimeChanged, [this] {start();});
 
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
@@ -34,6 +38,28 @@ MainWindow::MainWindow(QWidget *parent)
     inputData();
 
 }
+
+void MainWindow::updateLightIndicator(const QString &lightColor, bool turnedOn) {
+    QString baseStyle = "border-radius: 10px;"; // Common style for all lights
+    QString offStyle = "background-color: rgba(0, 0, 0, 0.1);"; // Style for turned off light
+    QString onStyleTemplate = "background-color: qradialgradient(cx: 0.5, cy: 0.5, radius: 1, fx: 0.5, fy: 0.5, stop: 0 %1, stop: 0.8 %2);"; // Style for turned on light
+
+    QString onStyle = onStyleTemplate.arg(lightColor + "80", lightColor); // Adding transparency for a glow effect
+
+    if (lightColor == "#FF0000") { // Red Light
+        ui->lightIndicatorRed->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
+    } else if (lightColor == "#00FF00") { // Green Light
+        ui->lightIndicatorGreen->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
+    } else if (lightColor == "#0000FF") { // Blue Light
+        ui->lightIndicatorBlue->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
+    }
+}
+
+void MainWindow::disconnect() {
+    qInfo() << "The electrolode patch were disconnect";
+    stop();
+}
+
 void MainWindow::inputData(){
     SignalData signalArray[3];//Alpha
     signalArray[0] = SignalData(440.0, 8.0);
@@ -132,7 +158,7 @@ void MainWindow::log(){
             m_logHistory.close();
 }
 void MainWindow:: start(){
-
+    updateLightIndicator("#0000FF", true); // Turn on the blue light
     for (int i = 0; i <7; i++){
         qInfo() << "Dominant Frequency: " << fd[i] << " Hz";
     }
@@ -167,6 +193,7 @@ void MainWindow::dataEntry(){
 }
 
 void MainWindow::stop(){
+   updateLightIndicator("#FF0000", true); // Turn on the red light
    timer2->stop();//stops the session
    counter=0;
    ui->SessionPr->setValue(0);
@@ -189,6 +216,7 @@ void MainWindow::on(){
     ui->Battery->setVisible(true);
     ui->Start->setVisible(true);
     ui->frame->setVisible(true);
+    updateLightIndicator("#00FF00", true); // Turn on the green light
 
 }
 
