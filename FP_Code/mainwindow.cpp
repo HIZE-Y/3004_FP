@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer2, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(timer2, SIGNAL(timeout()), this, SLOT(dataEntry()));
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
-
+    connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
 
     inputData();
 
@@ -54,6 +54,7 @@ void MainWindow::updateLightIndicator(const QString &lightColor, bool turnedOn) 
         ui->lightIndicatorBlue->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
     }
 }
+
 
 void MainWindow::disconnect() {
     qInfo() << "The electrolode patch were disconnect";
@@ -99,7 +100,20 @@ void MainWindow::inputData(){
     fd[4] = math(signalArray5, 3);
     fd[5] = math(signalArray6, 3);
     fd[6] = math(signalArray7, 3);
+    treatment(fd);
 };
+
+void MainWindow:: treatment(double t[]){
+
+    for (int i=0;i<7 ;i++ ) {
+        fd1[i]=t[i]+0.1;
+        fd2[i]= fd1[i]+0.1;
+        fd3[i]= fd2[i]+0.1;
+        fTd[i]= fd3[i]+0.1;
+    }
+
+}
+
 double MainWindow::math(SignalData t[], int size) {
     double numerator = 0.0;
     double denominator = 0.0;
@@ -117,6 +131,7 @@ double MainWindow::math(SignalData t[], int size) {
     return numerator / denominator;
 }
 void MainWindow::intil(){
+
     inputData();
 
     counter=0;
@@ -129,6 +144,8 @@ void MainWindow::intil(){
     timer->setInterval(1000);
     timer->start();
 
+    flash = new QTimer(this);
+    flash->setInterval(500); // Flash interval (500ms for example)
 }
 MainWindow::~MainWindow()
 {
@@ -159,9 +176,16 @@ void MainWindow::log(){
 }
 void MainWindow:: start(){
     updateLightIndicator("#0000FF", true); // Turn on the blue light
+    updateLightIndicator("#00FF00", false); // Turn off the green light
     for (int i = 0; i <7; i++){
-        qInfo() << "Dominant Frequency: " << fd[i] << " Hz";
+       qInfo() << "Dominant Frequency: " << fd[i] << " Hz";
+//       qInfo() << fd1[i];
+//       qInfo() << fd2[i];
+//       qInfo() << fd3[i];
+//       qInfo() << fTd[i];
     }
+    flashCount=0;
+    flash->start();
     if (m_logHistory.isOpen()) {
             m_logHistory.close();
         }
@@ -176,9 +200,13 @@ void MainWindow:: start(){
             qDebug() << "Failed to open" << m_logHistory.errorString();
         }
     qInfo()<<"added to the history log";
-    QString sessionEntry = "the result of the session that you start it at: " + sessionStartStr + "\n";
-    QTextStream out(&m_logHistory);
-    out << sessionEntry;
+    for (int i=0;i<7 ;i++ ) {
+        qInfo()<<"test"<<fd[i];
+        QString sessionEntry = "the result of the session that you start it at: " + sessionStartStr + "Intial FD:"+QString::number(fd[i])+"After treatment:"+QString::number(fTd[i])+"\n";
+        QTextStream out(&m_logHistory);
+        out << sessionEntry;
+    }
+
 
 }
 
@@ -186,10 +214,10 @@ void MainWindow:: start(){
 void MainWindow::dataEntry(){
    // timer->stop(  if(timer==0)
     counter++;
-    if(counter==21){
+    if(counter==7){
        qInfo()<<"Reached 21";
     timer2->stop();    }
-     qInfo()<<counter;
+    // qInfo()<<counter;
 }
 
 void MainWindow::stop(){
@@ -275,8 +303,21 @@ void MainWindow::updateProgressBar(){
         ui->SessionPr->setValue(100);
         stop();
     }
-
 }
 
+//flash
+void MainWindow::handleFlash() {
+    // Toggle the green light's state
+    bool isOn = (flashCount % 2) == 0;
+     updateLightIndicator("#00FF00",isOn);
 
+    // Increment the flash count
+    flashCount++;
+
+    // If the desired number of flashes has occurred, stop the timer
+    if (flashCount >= 6) { // 2 seconds at 500ms per interval = 4 flashes
+        flash->stop();
+        flashCount = 0; // Reset the counter for the next use
+    }
+}
 

@@ -399,7 +399,7 @@ mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FP_Code/mainwindow.cpp
 
-signaldata.o: ../FP_Code/signaldata.cpp ../FP_Code/signaldata.h
+signaldata.o: ../FP_Code/signaldata.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signaldata.o ../FP_Code/signaldata.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
