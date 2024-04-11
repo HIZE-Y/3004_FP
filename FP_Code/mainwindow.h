@@ -68,6 +68,9 @@ private:
     SignalData signalArray5;
     SignalData signalArray6;
     SignalData signalArray7;
+    QCustomPlot *compositeWaveformPlot;
+    void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot);
+
 
 };
 #endif // MAINWINDOW_H

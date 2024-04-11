@@ -22,6 +22,7 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -49,6 +50,9 @@ public:
     QLabel *lightIndicatorRed;
     QLabel *lightIndicatorBlue;
     QLabel *lightIndicatorGreen;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *mainLayout;
+    QCustomPlot *wavePlot;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -56,7 +60,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(942, 600);
+        MainWindow->resize(1557, 887);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         frame = new QFrame(centralwidget);
@@ -129,10 +133,19 @@ public:
 
         verticalLayout->addWidget(lightIndicatorGreen);
 
+        verticalLayoutWidget_2 = new QWidget(centralwidget);
+        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(959, 150, 261, 191));
+        mainLayout = new QVBoxLayout(verticalLayoutWidget_2);
+        mainLayout->setObjectName(QString::fromUtf8("mainLayout"));
+        mainLayout->setContentsMargins(0, 0, 0, 0);
+        wavePlot = new QCustomPlot(centralwidget);
+        wavePlot->setObjectName(QString::fromUtf8("wavePlot"));
+        wavePlot->setGeometry(QRect(1049, 390, 341, 381));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 942, 22));
+        menubar->setGeometry(QRect(0, 0, 1557, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

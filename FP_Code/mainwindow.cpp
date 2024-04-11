@@ -37,7 +37,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
 
     inputData();
-
+    void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot);
+    QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot");
+    if (compositeWaveformPlot) {
+            setupCompositeWaveformPlot(compositeWaveformPlot);
+        } else {
+            qDebug() << "Failed to find QCustomPlot widget";
+        }
 }
 
 void MainWindow::updateLightIndicator(const QString &lightColor, bool turnedOn) {
@@ -309,5 +315,32 @@ void MainWindow::handleFlash() {
         flash->stop();
         flashCount = 0; // Reset the counter for the next use
     }
+}
+
+void setupCompositeWaveformPlot(QCustomPlot *customPlot)
+{
+    // Generate some data for the composite waveform:
+    QVector<double> x(1001), y(1001); // 1001 points for smoothness
+    double tStep = 1.0 / (x.size() - 1);
+
+    for (int i = 0; i < x.size(); ++i)
+    {
+        double t = i * tStep; // Time from 0 to 1
+        x[i] = t;
+        // Calculate the composite waveform as the sum of three sine waves
+        y[i] = 440 * qSin(2 * M_PI * 8.0 * t) + 880.0 * qSin(2 * M_PI * 10.8 * t) + 880.0 * qSin(2 * M_PI * 11.8 * t);
+    }
+
+    // Create graph and assign data to it:
+    customPlot->addGraph();
+    customPlot->graph(0)->setData(x, y);
+
+    // Give the axes some labels and set their ranges:
+    customPlot->xAxis->setLabel("Time (s)");
+    customPlot->yAxis->setLabel("Amplitude");
+    customPlot->xAxis->setRange(0, 1);
+    customPlot->yAxis->setRange(-2300, 2300); // Adjusted for the amplitude of the composite waveform
+
+    customPlot->replot(); // This line is necessary to make the graph visible
 }
 

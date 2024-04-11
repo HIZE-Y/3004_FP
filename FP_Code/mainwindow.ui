@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>942</width>
-    <height>600</height>
+    <width>1557</width>
+    <height>887</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -239,19 +239,48 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>959</x>
+      <y>150</y>
+      <width>261</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="mainLayout"/>
+   </widget>
+   <widget class="QCustomPlot" name="wavePlot" native="true">
+    <property name="geometry">
+     <rect>
+      <x>1049</x>
+      <y>390</y>
+      <width>341</width>
+      <height>381</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>942</width>
+     <width>1557</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

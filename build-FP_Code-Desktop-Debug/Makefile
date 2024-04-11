@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../FP_Code -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I../FP_Code -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,10 +37,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = FP_Code1.0.0
-DISTDIR = /home/student/Lead_programer/3004_FP/build-FP_Code-Desktop-Debug/.tmp/FP_Code1.0.0
+DISTDIR = /home/student/Desktop/3004_FP/build-FP_Code-Desktop-Debug/.tmp/FP_Code1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5PrintSupport.so /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,12 +52,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../FP_Code/main.cpp \
+SOURCES       = ../FP_Code/qcustomplot.cpp \
+		../FP_Code/main.cpp \
 		../FP_Code/mainwindow.cpp \
-		../FP_Code/signaldata.cpp moc_mainwindow.cpp
-OBJECTS       = main.o \
+		../FP_Code/signaldata.cpp moc_qcustomplot.cpp \
+		moc_mainwindow.cpp
+OBJECTS       = qcustomplot.o \
+		main.o \
 		mainwindow.o \
 		signaldata.o \
+		moc_qcustomplot.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -137,8 +141,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../FP_Code/FP_Code.pro ../FP_Code/mainwindow.h \
-		../FP_Code/signaldata.h ../FP_Code/main.cpp \
+		../FP_Code/FP_Code.pro ../FP_Code/qcustomplot.h \
+		../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h ../FP_Code/qcustomplot.cpp \
+		../FP_Code/main.cpp \
 		../FP_Code/mainwindow.cpp \
 		../FP_Code/signaldata.cpp
 QMAKE_TARGET  = FP_Code
@@ -326,8 +332,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/mainwindow.h ../FP_Code/signaldata.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp ../FP_Code/signaldata.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/qcustomplot.h ../FP_Code/mainwindow.h ../FP_Code/signaldata.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/qcustomplot.cpp ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp ../FP_Code/signaldata.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../FP_Code/mainwindow.ui $(DISTDIR)/
 
 
@@ -360,14 +366,20 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_qcustomplot.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../FP_Code/mainwindow.h \
-		../FP_Code/signaldata.h \
+	-$(DEL_FILE) moc_qcustomplot.cpp moc_mainwindow.cpp
+moc_qcustomplot.cpp: ../FP_Code/qcustomplot.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Lead_programer/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Lead_programer/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/qcustomplot.h -o moc_qcustomplot.cpp
+
+moc_mainwindow.cpp: ../FP_Code/mainwindow.h \
+		../FP_Code/signaldata.h \
+		../FP_Code/qcustomplot.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -377,7 +389,8 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../FP_Code/mainwindow.ui \
-		/usr/lib/qt5/bin/uic
+		/usr/lib/qt5/bin/uic \
+		../FP_Code/qcustomplot.h
 	/usr/lib/qt5/bin/uic ../FP_Code/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -390,17 +403,25 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+qcustomplot.o: ../FP_Code/qcustomplot.cpp ../FP_Code/qcustomplot.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcustomplot.o ../FP_Code/qcustomplot.cpp
+
 main.o: ../FP_Code/main.cpp ../FP_Code/mainwindow.h \
-		../FP_Code/signaldata.h
+		../FP_Code/signaldata.h \
+		../FP_Code/qcustomplot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FP_Code/main.cpp
 
 mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
 		../FP_Code/signaldata.h \
+		../FP_Code/qcustomplot.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FP_Code/mainwindow.cpp
 
 signaldata.o: ../FP_Code/signaldata.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signaldata.o ../FP_Code/signaldata.cpp
+
+moc_qcustomplot.o: moc_qcustomplot.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
