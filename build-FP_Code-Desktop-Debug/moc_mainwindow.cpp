@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[26];
-    char stringdata0[211];
+    QByteArrayData data[25];
+    char stringdata0[201];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,30 +41,29 @@ QT_MOC_LITERAL(5, 28, 2), // "on"
 QT_MOC_LITERAL(6, 31, 3), // "off"
 QT_MOC_LITERAL(7, 35, 13), // "updateBattery"
 QT_MOC_LITERAL(8, 49, 5), // "intil"
-QT_MOC_LITERAL(9, 55, 9), // "dataEntry"
-QT_MOC_LITERAL(10, 65, 4), // "stop"
-QT_MOC_LITERAL(11, 70, 5), // "pause"
-QT_MOC_LITERAL(12, 76, 6), // "resume"
-QT_MOC_LITERAL(13, 83, 10), // "disconnect"
-QT_MOC_LITERAL(14, 94, 17), // "updateProgressBar"
-QT_MOC_LITERAL(15, 112, 9), // "inputData"
-QT_MOC_LITERAL(16, 122, 20), // "updateLightIndicator"
-QT_MOC_LITERAL(17, 143, 5), // "color"
-QT_MOC_LITERAL(18, 149, 4), // "math"
-QT_MOC_LITERAL(19, 154, 12), // "SignalData[]"
-QT_MOC_LITERAL(20, 167, 5), // "array"
-QT_MOC_LITERAL(21, 173, 4), // "size"
-QT_MOC_LITERAL(22, 178, 9), // "treatment"
-QT_MOC_LITERAL(23, 188, 8), // "double[]"
-QT_MOC_LITERAL(24, 197, 1), // "t"
-QT_MOC_LITERAL(25, 199, 11) // "handleFlash"
+QT_MOC_LITERAL(9, 55, 4), // "stop"
+QT_MOC_LITERAL(10, 60, 5), // "pause"
+QT_MOC_LITERAL(11, 66, 6), // "resume"
+QT_MOC_LITERAL(12, 73, 10), // "disconnect"
+QT_MOC_LITERAL(13, 84, 17), // "updateProgressBar"
+QT_MOC_LITERAL(14, 102, 9), // "inputData"
+QT_MOC_LITERAL(15, 112, 20), // "updateLightIndicator"
+QT_MOC_LITERAL(16, 133, 5), // "color"
+QT_MOC_LITERAL(17, 139, 4), // "math"
+QT_MOC_LITERAL(18, 144, 12), // "SignalData[]"
+QT_MOC_LITERAL(19, 157, 5), // "array"
+QT_MOC_LITERAL(20, 163, 4), // "size"
+QT_MOC_LITERAL(21, 168, 9), // "treatment"
+QT_MOC_LITERAL(22, 178, 8), // "double[]"
+QT_MOC_LITERAL(23, 187, 1), // "t"
+QT_MOC_LITERAL(24, 189, 11) // "handleFlash"
 
     },
     "MainWindow\0start\0\0log\0power\0on\0off\0"
-    "updateBattery\0intil\0dataEntry\0stop\0"
-    "pause\0resume\0disconnect\0updateProgressBar\0"
-    "inputData\0updateLightIndicator\0color\0"
-    "math\0SignalData[]\0array\0size\0treatment\0"
+    "updateBattery\0intil\0stop\0pause\0resume\0"
+    "disconnect\0updateProgressBar\0inputData\0"
+    "updateLightIndicator\0color\0math\0"
+    "SignalData[]\0array\0size\0treatment\0"
     "double[]\0t\0handleFlash"
 };
 #undef QT_MOC_LITERAL
@@ -75,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,24 +82,23 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  104,    2, 0x08 /* Private */,
-       3,    0,  105,    2, 0x08 /* Private */,
-       4,    0,  106,    2, 0x08 /* Private */,
-       5,    0,  107,    2, 0x08 /* Private */,
-       6,    0,  108,    2, 0x08 /* Private */,
-       7,    0,  109,    2, 0x08 /* Private */,
-       8,    0,  110,    2, 0x08 /* Private */,
-       9,    0,  111,    2, 0x08 /* Private */,
-      10,    0,  112,    2, 0x08 /* Private */,
-      11,    0,  113,    2, 0x08 /* Private */,
-      12,    0,  114,    2, 0x08 /* Private */,
-      13,    0,  115,    2, 0x08 /* Private */,
-      14,    0,  116,    2, 0x08 /* Private */,
-      15,    0,  117,    2, 0x08 /* Private */,
-      16,    2,  118,    2, 0x08 /* Private */,
-      18,    2,  123,    2, 0x08 /* Private */,
-      22,    1,  128,    2, 0x08 /* Private */,
-      25,    0,  131,    2, 0x08 /* Private */,
+       1,    0,   99,    2, 0x08 /* Private */,
+       3,    0,  100,    2, 0x08 /* Private */,
+       4,    0,  101,    2, 0x08 /* Private */,
+       5,    0,  102,    2, 0x08 /* Private */,
+       6,    0,  103,    2, 0x08 /* Private */,
+       7,    0,  104,    2, 0x08 /* Private */,
+       8,    0,  105,    2, 0x08 /* Private */,
+       9,    0,  106,    2, 0x08 /* Private */,
+      10,    0,  107,    2, 0x08 /* Private */,
+      11,    0,  108,    2, 0x08 /* Private */,
+      12,    0,  109,    2, 0x08 /* Private */,
+      13,    0,  110,    2, 0x08 /* Private */,
+      14,    0,  111,    2, 0x08 /* Private */,
+      15,    2,  112,    2, 0x08 /* Private */,
+      17,    2,  117,    2, 0x08 /* Private */,
+      21,    1,  122,    2, 0x08 /* Private */,
+      24,    0,  125,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -116,10 +114,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::Bool,   17,    2,
-    QMetaType::Double, 0x80000000 | 19, QMetaType::Int,   20,   21,
-    QMetaType::Void, 0x80000000 | 23,   24,
+    QMetaType::Void, QMetaType::QString, QMetaType::Bool,   16,    2,
+    QMetaType::Double, 0x80000000 | 18, QMetaType::Int,   19,   20,
+    QMetaType::Void, 0x80000000 | 22,   23,
     QMetaType::Void,
 
        0        // eod
@@ -138,18 +135,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->off(); break;
         case 5: _t->updateBattery(); break;
         case 6: _t->intil(); break;
-        case 7: _t->dataEntry(); break;
-        case 8: _t->stop(); break;
-        case 9: _t->pause(); break;
-        case 10: _t->resume(); break;
-        case 11: _t->disconnect(); break;
-        case 12: _t->updateProgressBar(); break;
-        case 13: _t->inputData(); break;
-        case 14: _t->updateLightIndicator((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 15: { double _r = _t->math((*reinterpret_cast< SignalData(*)[]>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
+        case 7: _t->stop(); break;
+        case 8: _t->pause(); break;
+        case 9: _t->resume(); break;
+        case 10: _t->disconnect(); break;
+        case 11: _t->updateProgressBar(); break;
+        case 12: _t->inputData(); break;
+        case 13: _t->updateLightIndicator((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 14: { double _r = _t->math((*reinterpret_cast< SignalData(*)[]>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< double*>(_a[0]) = std::move(_r); }  break;
-        case 16: _t->treatment((*reinterpret_cast< double(*)[]>(_a[1]))); break;
-        case 17: _t->handleFlash(); break;
+        case 15: _t->treatment((*reinterpret_cast< double(*)[]>(_a[1]))); break;
+        case 16: _t->handleFlash(); break;
         default: ;
         }
     }
@@ -184,13 +180,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 18;
+        _id -= 17;
     }
     return _id;
 }

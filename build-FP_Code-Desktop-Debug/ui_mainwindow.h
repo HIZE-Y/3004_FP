@@ -36,7 +36,7 @@ public:
     QDateTimeEdit *dateTimeEdit;
     QPushButton *Pause;
     QPushButton *stopButton;
-    QPushButton *pushButton_2;
+    QPushButton *Resume;
     QTextBrowser *Histroylog;
     QProgressBar *SessionPr;
     QLabel *label;
@@ -83,9 +83,9 @@ public:
         stopButton = new QPushButton(frame);
         stopButton->setObjectName(QString::fromUtf8("stopButton"));
         stopButton->setGeometry(QRect(400, 140, 83, 25));
-        pushButton_2 = new QPushButton(frame);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(310, 140, 83, 25));
+        Resume = new QPushButton(frame);
+        Resume->setObjectName(QString::fromUtf8("Resume"));
+        Resume->setGeometry(QRect(310, 140, 83, 25));
         Histroylog = new QTextBrowser(frame);
         Histroylog->setObjectName(QString::fromUtf8("Histroylog"));
         Histroylog->setGeometry(QRect(10, 220, 381, 192));
@@ -150,7 +150,7 @@ public:
         log->setText(QCoreApplication::translate("MainWindow", "Log", nullptr));
         Pause->setText(QCoreApplication::translate("MainWindow", "Pause", nullptr));
         stopButton->setText(QCoreApplication::translate("MainWindow", "Stop", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Resume", nullptr));
+        Resume->setText(QCoreApplication::translate("MainWindow", "Resume", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Session Progress", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Battery", nullptr));
         label_3->setText(QString());

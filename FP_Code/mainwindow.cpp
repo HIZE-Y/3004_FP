@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power,&QPushButton::clicked, [this]() { power(); });
     connect(ui->log,&QPushButton::clicked, [this]() { log(); });
     connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
+    connect(ui->Pause,&QPushButton::clicked, [this]() { pause(); });
+    connect(ui->Resume,&QPushButton::clicked, [this]() { resume(); });
     connect(ui->Disconnect,&QPushButton::clicked, [this]() { disconnect(); });
     //connect(ui->dateTimeEdit,&QDateTimeEdit::dateTimeChanged, [this] {start();});
 
@@ -31,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
     connect(timer2, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
-    connect(timer2, SIGNAL(timeout()), this, SLOT(dataEntry()));
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
     connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
 
@@ -140,7 +141,7 @@ void MainWindow::intil(){
     timer2 = new QTimer(this);
     timer2->setInterval(1000);
     timer3 = new QTimer(this);
-    timer3->setInterval(1000);
+    timer3->setInterval(5000);
     timer->setInterval(1000);
     timer->start();
 
@@ -177,13 +178,7 @@ void MainWindow::log(){
 void MainWindow:: start(){
     updateLightIndicator("#0000FF", true); // Turn on the blue light
     updateLightIndicator("#00FF00", false); // Turn off the green light
-    for (int i = 0; i <7; i++){
-       qInfo() << "Dominant Frequency: " << fd[i] << " Hz";
-//       qInfo() << fd1[i];
-//       qInfo() << fd2[i];
-//       qInfo() << fd3[i];
-//       qInfo() << fTd[i];
-    }
+    updateLightIndicator("#FF0000", false); // Turn off the red light
     flashCount=0;
     flash->start();
     if (m_logHistory.isOpen()) {
@@ -195,6 +190,7 @@ void MainWindow:: start(){
 
 
     timer2->start();
+    counter = 1;
      QFile file("history.txt");
     if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
             qDebug() << "Failed to open" << m_logHistory.errorString();
@@ -211,17 +207,9 @@ void MainWindow:: start(){
 }
 
 
-void MainWindow::dataEntry(){
-   // timer->stop(  if(timer==0)
-    counter++;
-    if(counter==7){
-       qInfo()<<"Reached 21";
-    timer2->stop();    }
-    // qInfo()<<counter;
-}
-
 void MainWindow::stop(){
    updateLightIndicator("#FF0000", true); // Turn on the red light
+   timer3->stop();
    timer2->stop();//stops the session
    counter=0;
    ui->SessionPr->setValue(0);
@@ -267,13 +255,11 @@ void MainWindow::power(){
         }
         //if device is on and power is pressed, turn device off
         else if(state == 1){
-            //turn screen back off
             off();
             state = 0; //device is turned off
         }
         //if session is in progress and power is pressed, deal with the interruption, and then turn device off
         else if(state == 2){
-            //turn screen back off
             off();
             state = 0; //device is turned off
         }
@@ -295,11 +281,11 @@ void MainWindow::updateBattery(){
 }
 
 void MainWindow::updateProgressBar(){
-    int progress = (counter * 100) / 7;
+    int progress = (counter * 100) / 6;
     ui->SessionPr->setValue(progress);
-
-    // session ends
-    if(counter == 7){
+    qInfo() << "the counter is :" << counter;
+    counter++;
+    if(progress > 100){
         ui->SessionPr->setValue(100);
         stop();
     }

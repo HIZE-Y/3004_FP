@@ -31,7 +31,6 @@ private slots:
     void off();
     void updateBattery();
     void intil();
-    void dataEntry();
     void stop();
     void pause();
     void resume();
