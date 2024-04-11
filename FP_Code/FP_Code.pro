@@ -12,10 +12,12 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     signaldata.cpp
+    qcustomplot.cpp
 
 HEADERS += \
     mainwindow.h \
     signaldata.h
+    qcustomplot.h
 
 FORMS += \
     mainwindow.ui

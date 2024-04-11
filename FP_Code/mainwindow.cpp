@@ -241,6 +241,9 @@ void MainWindow::off(){
     ui->Start->setVisible(false);
     ui->frame->setVisible(false);
     timer2->stop();//stops the session
+    updateLightIndicator("#0000FF", false); // Turn on the blue light
+    updateLightIndicator("#00FF00", false); // Turn off the green light
+    updateLightIndicator("#FF0000", false); // Turn off the red light
     counter=0;
 }
 
@@ -277,6 +280,7 @@ void MainWindow::updateBattery(){
 
     else{ //battery is out, so act as if the devie has been turned off
         off();
+
     }
 }
 

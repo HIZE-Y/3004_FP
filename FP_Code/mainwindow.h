@@ -10,6 +10,8 @@
 #include "QThread"
 //=======
 #include <QTimer>
+#include "qcustomplot.h"
+
 //>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
 
 QT_BEGIN_NAMESPACE
