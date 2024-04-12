@@ -8,11 +8,9 @@
 #include "signaldata.h"
 #include "math.h"
 #include "QThread"
-//=======
 #include <QTimer>
 #include "qcustomplot.h"
 
-//>>>>>>> 61575b124b1040492ee8768dc15a76fcf11544fc
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,7 +41,11 @@ private slots:
     double math(SignalData array[], int size);
     void treatment(double t[]);
     void handleFlash();
+
    // void afterTreatment(QCustomPlot *customPlot);
+
+    void handleRedFlash();
+
 
 private:
     Ui::MainWindow *ui;
@@ -61,7 +63,9 @@ private:
     QTimer *timer;
     QTimer  *timer3;
     int flashCount;
+    int redFlashCount;
     QTimer *flash;
+//<<<<<<< HEAD
     SignalData signalArray[3];      // Array for one type of signal
      SignalData signalArray2[3];     // Another array for a different type
      SignalData signalArray3[3];
@@ -86,6 +90,9 @@ private:
 //    SignalData treaTeadtedData5;
 //    SignalData treaTeadtedData6;
 //    SignalData treaTeadtedData7;
+
+
+    QTimer *redFlash;
 
     QCustomPlot *compositeWaveformPlot;
     void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot,SignalData *signalData);
