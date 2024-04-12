@@ -43,6 +43,7 @@ private slots:
     double math(SignalData array[], int size);
     void treatment(double t[]);
     void handleFlash();
+    void handleRedFlash();
 
 private:
     Ui::MainWindow *ui;
@@ -60,7 +61,9 @@ private:
     QTimer *timer;
     QTimer  *timer3;
     int flashCount;
+    int redFlashCount;
     QTimer *flash;
+    QTimer *redFlash;
     SignalData signalArray;
     SignalData signalArray2;
     SignalData signalArray3;

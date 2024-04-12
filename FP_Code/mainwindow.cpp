@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer2, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
     connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
+    connect(redFlash, &QTimer::timeout, this, &MainWindow::handleRedFlash);
 
     inputData();
     void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot);
@@ -153,6 +154,9 @@ void MainWindow::intil(){
 
     flash = new QTimer(this);
     flash->setInterval(500); // Flash interval (500ms for example)
+
+    redFlash = new QTimer(this);
+    redFlash->setInterval(500);
 }
 MainWindow::~MainWindow()
 {
@@ -215,6 +219,12 @@ void MainWindow:: start(){
 
 void MainWindow::stop(){
    updateLightIndicator("#FF0000", true); // Turn on the red light
+
+   // turn red light off after 2 seconds
+    QTimer::singleShot(2000, [this](){
+        updateLightIndicator("#FF0000", false); // Turn off the red light
+   });
+
    timer3->stop();
    timer2->stop();//stops the session
    counter=0;
@@ -226,12 +236,26 @@ void MainWindow::pause(){
     timer2->stop();
     timer3->start();
     state = 2;
+
+//    flashCount = 0; // Reset the flash count
+//    flash->start();
+
+    // Turn off the green light
+    updateLightIndicator("#00FF00", false);
+    redFlashCount = 0; // Reset the flash count
+    redFlash->start();
+
 }
 
 void MainWindow::resume(){
     timer3->stop();
     timer2->start();
     state = 1;
+    // Start flashing the green light
+    flashCount = 0; // Reset the flash count
+    flash->start();
+    // Turn off the red light
+    updateLightIndicator("#FF0000", false);
 }
 
 void MainWindow::on(){
@@ -279,7 +303,7 @@ void MainWindow::power(){
 
 void MainWindow::updateBattery(){
     if(ui->Battery->value() != 0){
-        if(state == 1){
+        if(state == 1 || state == 2){
             ui->Battery->setValue(ui->Battery->value() - 1);
         }
     }
@@ -311,10 +335,27 @@ void MainWindow::handleFlash() {
     flashCount++;
 
     // If the desired number of flashes has occurred, stop the timer
-    if (flashCount >= 6) { // 2 seconds at 500ms per interval = 4 flashes
+    if (flashCount >= 4) { // 2 seconds at 500ms per interval = 4 flashes
         flash->stop();
         flashCount = 0; // Reset the counter for the next use
     }
+
+}
+
+void MainWindow::handleRedFlash() {
+    // Toggle the red light's state
+    bool isOn = (redFlashCount % 2) == 0;
+     updateLightIndicator("#FF0000",isOn);
+
+    // Increment the flash count
+    redFlashCount++;
+
+    // If the desired number of flashes has occurred, stop the timer
+    if (redFlashCount >= 6) { // 2 seconds at 500ms per interval = 4 flashes
+        redFlash->stop();
+        redFlashCount = 0; // Reset the counter for the next use
+    }
+
 }
 
 void setupCompositeWaveformPlot(QCustomPlot *customPlot)
