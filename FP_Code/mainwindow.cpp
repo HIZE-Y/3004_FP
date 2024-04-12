@@ -37,13 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
 
     inputData();
-    void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot);
-    QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot");
-    if (compositeWaveformPlot) {
-            setupCompositeWaveformPlot(compositeWaveformPlot);
-        } else {
-            qDebug() << "Failed to find QCustomPlot widget";
-        }
+
 }
 
 void MainWindow::updateLightIndicator(const QString &lightColor, bool turnedOn) {
@@ -69,36 +63,43 @@ void MainWindow::disconnect() {
 }
 
 void MainWindow::inputData(){
-    SignalData signalArray[3];//Alpha
+    //this is for intial
+  //  SignalData signalArray[3];//Alpha
     signalArray[0] = SignalData(440.0, 8.0);
     signalArray[1] = SignalData(880.0, 10.8);
     signalArray[2] = SignalData(880.0, 11.8);
 
-    SignalData signalArray2[3];//Beta Wave
+   // SignalData signalArray2[3];//Beta Wave
     signalArray2[0] = SignalData(440.0, 12.0);
     signalArray2[1] = SignalData(880.0, 15.8);
     signalArray2[2] = SignalData(880.0, 20.8);
 
-    SignalData signalArray3[3];//theta
+   // SignalData signalArray3[3];//theta
     signalArray3[0] = SignalData(440.0, 8.0);
     signalArray3[1] = SignalData(880.0, 4.8);
     signalArray3[2] = SignalData(880.0, 5.8);
-    SignalData signalArray4[3];//gamma
+
+   // SignalData signalArray4[3];//gamma
     signalArray4[0] = SignalData(440.0, 25.0);
     signalArray4[1] = SignalData(880.0, 30.8);
     signalArray4[2] = SignalData(880.0, 90.8);
-    SignalData signalArray5[3];//alpha
+
+   // SignalData signalArray5[3];//alpha
     signalArray5[0] = SignalData(440.0, 8.0);
     signalArray5[1] = SignalData(880.0, 11.8);
     signalArray5[2] = SignalData(880.0, 9.8);
-    SignalData signalArray6[3];//theta
+
+   // SignalData signalArray6[3];//theta
     signalArray6[0] = SignalData(440.0, 4.50);
     signalArray6[1] = SignalData(880.0, 5.8);
     signalArray6[2] = SignalData(880.0, 6.8);
-    SignalData signalArray7[3];// Beta
+
+   // SignalData signalArray7[3];// Beta
     signalArray7[0] = SignalData(440.0, 12.0);
     signalArray7[1] = SignalData(880.0, 13.8);
     signalArray7[2] = SignalData(880.0, 19.8);
+
+// this used to save treatted data for plotting reasons only
 
     fd[0] = math(signalArray, 3);
     fd[1] = math(signalArray2, 3);
@@ -108,7 +109,53 @@ void MainWindow::inputData(){
     fd[5] = math(signalArray6, 3);
     fd[6] = math(signalArray7, 3);
     treatment(fd);
+//    SignalData treaTeadtedData[3];
+    //treaTeadtedData[0]=SignalData(400,fd[2] );
+    tsignalArray[0] = SignalData(440.0, fd1[0]);
+    tsignalArray[1] = SignalData(880.0, fd1[0];
+    tsignalArray[2] = SignalData(880.0, fd1[0]);
+
+   // SignalData signalArray2[3];//Beta Wave
+    tsignalArray2[0] = SignalData(440.0, 12.0);
+    tsignalArray2[1] = SignalData(880.0, 15.8);
+    tsignalArray2[2] = SignalData(880.0, 20.8);
+
+   // SignalData signalArray3[3];//theta
+    tsignalArray3[0] = SignalData(440.0, 8.0);
+    tsignalArray3[1] = SignalData(880.0, 4.8);
+    tsignalArray3[2] = SignalData(880.0, 5.8);
+
+   // SignalData signalArray4[3];//gamma
+    tsignalArray4[0] = SignalData(440.0, 25.0);
+    tsignalArray4[1] = SignalData(880.0, 30.8);
+    tsignalArray4[2] = SignalData(880.0, 90.8);
+
+   // SignalData signalArray5[3];//alpha
+    tsignalArray5[0] = SignalData(440.0, 8.0);
+    tsignalArray5[1] = SignalData(880.0, 11.8);
+    tsignalArray5[2] = SignalData(880.0, 9.8);
+
+   // SignalData signalArray6[3];//theta
+    signalArray6[0] = SignalData(440.0, 4.50);
+    signalArray6[1] = SignalData(880.0, 5.8);
+    signalArray6[2] = SignalData(880.0, 6.8);
+
+   // SignalData signalArray7[3];// Beta
+    signalArray7[0] = SignalData(440.0, 12.0);
+    signalArray7[1] = SignalData(880.0, 13.8);
+    signalArray7[2] = SignalData(880.0, 19.8);
+
+// this used to save treatted data for plotting reasons only
+
+    fd[0] = math(signalArray, 3);
+    fd[1] = math(signalArray2, 3);
+    fd[2] = math(signalArray3, 3);
+    fd[3] = math(signalArray4, 3);
+    fd[4] = math(signalArray5, 3);
+    fd[5] = math(signalArray6, 3);
+    fd[6] = math(signalArray7, 3);
 };
+
 
 void MainWindow:: treatment(double t[]){
 
@@ -209,6 +256,29 @@ void MainWindow:: start(){
         out << sessionEntry;
     }
 
+   //void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot,SignalData *signalData);
+    QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot");
+    QCustomPlot *compositeWaveformPlot2 = findChild<QCustomPlot*>("wavePlot_2");
+    QCustomPlot *compositeWaveformPlot3 = findChild<QCustomPlot*>("wavePlot_3");
+    QCustomPlot *compositeWaveformPlot4 = findChild<QCustomPlot*>("wavePlot_4");
+    QCustomPlot *compositeWaveformPlot5 = findChild<QCustomPlot*>("wavePlot_5");
+    if (compositeWaveformPlot) {
+            setupCompositeWaveformPlot(compositeWaveformPlot,signalArray);
+            setupCompositeWaveformPlot(compositeWaveformPlot2,signalArray2);
+            setupCompositeWaveformPlot(compositeWaveformPlot3,signalArray3);
+            setupCompositeWaveformPlot(compositeWaveformPlot4,signalArray4);
+//          double x=signalArray[0].amplitude;
+//              qInfo()<<x;
+//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray2);
+//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray3);
+//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray4);
+              setupCompositeWaveformPlot(compositeWaveformPlot5,signalArray5);
+//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray6);
+//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray7);
+        } else {
+            qDebug() << "Failed to find QCustomPlot widget";
+        }
+
 
 }
 
@@ -279,7 +349,7 @@ void MainWindow::power(){
 
 void MainWindow::updateBattery(){
     if(ui->Battery->value() != 0){
-        if(state == 1){
+        if(state == 1 || state==2){
             ui->Battery->setValue(ui->Battery->value() - 1);
         }
     }
@@ -293,7 +363,7 @@ void MainWindow::updateBattery(){
 void MainWindow::updateProgressBar(){
     int progress = (counter * 100) / 6;
     ui->SessionPr->setValue(progress);
-    qInfo() << "the counter is :" << counter;
+
     counter++;
     if(progress > 100){
         ui->SessionPr->setValue(100);
@@ -317,18 +387,19 @@ void MainWindow::handleFlash() {
     }
 }
 
-void setupCompositeWaveformPlot(QCustomPlot *customPlot)
-{
+void MainWindow::setupCompositeWaveformPlot(QCustomPlot *customPlot, SignalData *l) {
     // Generate some data for the composite waveform:
     QVector<double> x(1001), y(1001); // 1001 points for smoothness
     double tStep = 1.0 / (x.size() - 1);
+
 
     for (int i = 0; i < x.size(); ++i)
     {
         double t = i * tStep; // Time from 0 to 1
         x[i] = t;
+        qInfo()<<"TEST"<<l[0].amplitude ;
         // Calculate the composite waveform as the sum of three sine waves
-        y[i] = 440 * qSin(2 * M_PI * 8.0 * t) + 880.0 * qSin(2 * M_PI * 10.8 * t) + 880.0 * qSin(2 * M_PI * 11.8 * t);
+        y[i] = l[0].amplitude * qSin(2 * M_PI * l[0].frequency * t) + l[1].amplitude * qSin(2 * M_PI * l[1].frequency * t) + l[2].amplitude * qSin(2 * M_PI * l[2].frequency * t);
     }
 
     // Create graph and assign data to it:
@@ -340,7 +411,8 @@ void setupCompositeWaveformPlot(QCustomPlot *customPlot)
     customPlot->yAxis->setLabel("Amplitude");
     customPlot->xAxis->setRange(0, 1);
     customPlot->yAxis->setRange(-2300, 2300); // Adjusted for the amplitude of the composite waveform
-
     customPlot->replot(); // This line is necessary to make the graph visible
 }
+
+
 

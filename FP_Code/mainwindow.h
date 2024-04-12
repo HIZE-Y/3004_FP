@@ -43,6 +43,7 @@ private slots:
     double math(SignalData array[], int size);
     void treatment(double t[]);
     void handleFlash();
+   // void afterTreatment(QCustomPlot *customPlot);
 
 private:
     Ui::MainWindow *ui;
@@ -61,15 +62,33 @@ private:
     QTimer  *timer3;
     int flashCount;
     QTimer *flash;
-    SignalData signalArray;
-    SignalData signalArray2;
-    SignalData signalArray3;
-    SignalData signalArray4;
-    SignalData signalArray5;
-    SignalData signalArray6;
-    SignalData signalArray7;
+    SignalData signalArray[3];      // Array for one type of signal
+     SignalData signalArray2[3];     // Another array for a different type
+     SignalData signalArray3[3];
+     SignalData signalArray4[3];      // Array for one type of signal
+      SignalData signalArray5[3];     // Another array for a different type
+      SignalData signalArray6[3];
+     SignalData signalArray7[3];
+
+
+
+
+     SignalData tsignalArray[4];      // Array for one type of signal
+     SignalData tsignalArray2[4];     // Another array for a different type
+     SignalData tsignalArray3[4];
+     SignalData tsignalArray4[4];      // Array for one type of signal
+     SignalData tsignalArray5[4];     // Another array for a different type
+     SignalData tsignalArray6[4];
+//    SignalData treaTeadtedData;
+//    SignalData treaTeadtedData2;
+//    SignalData treaTeadtedData3;
+//    SignalData treaTeadtedData4;
+//    SignalData treaTeadtedData5;
+//    SignalData treaTeadtedData6;
+//    SignalData treaTeadtedData7;
+
     QCustomPlot *compositeWaveformPlot;
-    void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot);
+    void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot,SignalData *signalData);
 
 
 };

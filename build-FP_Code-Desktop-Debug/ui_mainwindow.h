@@ -53,6 +53,10 @@ public:
     QWidget *verticalLayoutWidget_2;
     QVBoxLayout *mainLayout;
     QCustomPlot *wavePlot;
+    QCustomPlot *wavePlot_2;
+    QCustomPlot *wavePlot_3;
+    QCustomPlot *wavePlot_4;
+    QCustomPlot *wavePlot_5;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -141,7 +145,19 @@ public:
         mainLayout->setContentsMargins(0, 0, 0, 0);
         wavePlot = new QCustomPlot(centralwidget);
         wavePlot->setObjectName(QString::fromUtf8("wavePlot"));
-        wavePlot->setGeometry(QRect(1049, 390, 341, 381));
+        wavePlot->setGeometry(QRect(0, 490, 381, 351));
+        wavePlot_2 = new QCustomPlot(centralwidget);
+        wavePlot_2->setObjectName(QString::fromUtf8("wavePlot_2"));
+        wavePlot_2->setGeometry(QRect(390, 490, 371, 351));
+        wavePlot_3 = new QCustomPlot(centralwidget);
+        wavePlot_3->setObjectName(QString::fromUtf8("wavePlot_3"));
+        wavePlot_3->setGeometry(QRect(770, 490, 481, 331));
+        wavePlot_4 = new QCustomPlot(centralwidget);
+        wavePlot_4->setObjectName(QString::fromUtf8("wavePlot_4"));
+        wavePlot_4->setGeometry(QRect(1040, 430, 481, 331));
+        wavePlot_5 = new QCustomPlot(wavePlot_4);
+        wavePlot_5->setObjectName(QString::fromUtf8("wavePlot_5"));
+        wavePlot_5->setGeometry(QRect(220, 50, 481, 331));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
