@@ -42,10 +42,10 @@ private slots:
     void treatment(double t[]);
     void handleFlash();
 
+
    // void afterTreatment(QCustomPlot *customPlot);
 
     void handleRedFlash();
-
 
 private:
     Ui::MainWindow *ui;

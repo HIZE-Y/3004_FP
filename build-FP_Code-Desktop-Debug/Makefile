@@ -52,15 +52,19 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../FP_Code/qcustomplot.cpp \
+SOURCES       = ../FP_Code/graphwindow.cpp \
+		../FP_Code/qcustomplot.cpp \
 		../FP_Code/main.cpp \
 		../FP_Code/mainwindow.cpp \
-		../FP_Code/signaldata.cpp moc_qcustomplot.cpp \
+		../FP_Code/signaldata.cpp moc_graphwindow.cpp \
+		moc_qcustomplot.cpp \
 		moc_mainwindow.cpp
-OBJECTS       = qcustomplot.o \
+OBJECTS       = graphwindow.o \
+		qcustomplot.o \
 		main.o \
 		mainwindow.o \
 		signaldata.o \
+		moc_graphwindow.o \
 		moc_qcustomplot.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -141,9 +145,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../FP_Code/FP_Code.pro ../FP_Code/qcustomplot.h \
+		../FP_Code/FP_Code.pro ../FP_Code/graphwindow.h \
+		../FP_Code/qcustomplot.h \
 		../FP_Code/mainwindow.h \
-		../FP_Code/signaldata.h ../FP_Code/qcustomplot.cpp \
+		../FP_Code/signaldata.h ../FP_Code/graphwindow.cpp \
+		../FP_Code/qcustomplot.cpp \
 		../FP_Code/main.cpp \
 		../FP_Code/mainwindow.cpp \
 		../FP_Code/signaldata.cpp
@@ -155,7 +161,7 @@ TARGET        = FP_Code
 first: all
 ####### Build rules
 
-FP_Code: ui_mainwindow.h $(OBJECTS)  
+FP_Code: ui_graphwindow.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../FP_Code/FP_Code.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -332,9 +338,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/qcustomplot.h ../FP_Code/mainwindow.h ../FP_Code/signaldata.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/qcustomplot.cpp ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp ../FP_Code/signaldata.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FP_Code/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/graphwindow.h ../FP_Code/qcustomplot.h ../FP_Code/mainwindow.h ../FP_Code/signaldata.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/graphwindow.cpp ../FP_Code/qcustomplot.cpp ../FP_Code/main.cpp ../FP_Code/mainwindow.cpp ../FP_Code/signaldata.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FP_Code/graphwindow.ui ../FP_Code/mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -366,9 +372,16 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_qcustomplot.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_graphwindow.cpp moc_qcustomplot.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_qcustomplot.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_graphwindow.cpp moc_qcustomplot.cpp moc_mainwindow.cpp
+moc_graphwindow.cpp: ../FP_Code/graphwindow.h \
+		../FP_Code/qcustomplot.h \
+		ui_graphwindow.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/graphwindow.h -o moc_graphwindow.cpp
+
 moc_qcustomplot.cpp: ../FP_Code/qcustomplot.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -385,9 +398,14 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_graphwindow.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_graphwindow.h ui_mainwindow.h
+ui_graphwindow.h: ../FP_Code/graphwindow.ui \
+		/usr/lib/qt5/bin/uic \
+		../FP_Code/qcustomplot.h
+	/usr/lib/qt5/bin/uic ../FP_Code/graphwindow.ui -o ui_graphwindow.h
+
 ui_mainwindow.h: ../FP_Code/mainwindow.ui \
 		/usr/lib/qt5/bin/uic \
 		../FP_Code/qcustomplot.h
@@ -403,12 +421,19 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+graphwindow.o: ../FP_Code/graphwindow.cpp ../FP_Code/graphwindow.h \
+		../FP_Code/qcustomplot.h \
+		ui_graphwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphwindow.o ../FP_Code/graphwindow.cpp
+
 qcustomplot.o: ../FP_Code/qcustomplot.cpp ../FP_Code/qcustomplot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcustomplot.o ../FP_Code/qcustomplot.cpp
 
 main.o: ../FP_Code/main.cpp ../FP_Code/mainwindow.h \
 		../FP_Code/signaldata.h \
-		../FP_Code/qcustomplot.h
+		../FP_Code/qcustomplot.h \
+		../FP_Code/graphwindow.h \
+		ui_graphwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FP_Code/main.cpp
 
 mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
@@ -419,6 +444,9 @@ mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
 
 signaldata.o: ../FP_Code/signaldata.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signaldata.o ../FP_Code/signaldata.cpp
+
+moc_graphwindow.o: moc_graphwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_graphwindow.o moc_graphwindow.cpp
 
 moc_qcustomplot.o: moc_qcustomplot.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp

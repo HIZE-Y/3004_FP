@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QCoreApplication>
 #include <QDebug>
+#include <graphwindow.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -259,6 +260,9 @@ void MainWindow:: start(){
         QTextStream out(&m_logHistory);
         out << sessionEntry;
     }
+
+     GraphWindow* graphWindow = new GraphWindow(this);
+     graphWindow->show();
 
    //void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot,SignalData *signalData);
     QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot");
