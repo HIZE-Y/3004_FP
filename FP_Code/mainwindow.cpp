@@ -149,6 +149,9 @@ void MainWindow::log(){
 
 // Starts a session, updates lights, and begins data collection
 void MainWindow::start(){
+    if(ui->Battery->value() < 50){
+        qInfo() << "Low Battery Alert: "<<ui->Battery->value();
+    }
     updateLightIndicator("#0000FF", true); // Blue light on
     updateLightIndicator("#00FF00", false); // Green light off
     updateLightIndicator("#FF0000", false); // Red light off
@@ -227,8 +230,9 @@ void MainWindow::power(){
 
 // Updates the battery level based on device state
 void MainWindow::updateBattery() {
+
     if (ui->Battery->value() != 0) {
-        if (state == 1) {
+         if (state == 1) {
             ui->Battery->setValue(ui->Battery->value() - 1);
         } else if (state == 2) {
             ui->Battery->setValue(ui->Battery->value() - 2);
