@@ -6,12 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1557</width>
-    <height>887</height>
+    <width>1024</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #1a1a1a; /* Dark charcoal, adds depth and focus to other elements */
+}
+
+
+QWidget {
+    color: white;
+    font: bold 10pt &quot;Arial&quot;;
+}
+
+QPushButton, QFrame, QProgressBar, QDateTimeEdit, QTextBrowser {
+    border: 2px solid green;
+    border-radius: 10px;
+    background-color: #333333; /* Dark grey for slightly lighter contrast against main window */
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
@@ -22,6 +40,14 @@
       <width>701</width>
       <height>451</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame {
+    background-color: black;     /* Sets the background to black */
+    border: 3px solid green;     /* Sets the border color to green and width to 3px */
+    border-radius: 10px;         /* Optional: Adds rounded corners with a radius of 10px */
+}
+</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -38,6 +64,25 @@
        <height>25</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    color: white;                      /* White text color */
+    background-color: #333333;         /* Dark grey background, slightly lighter than black for contrast */
+    border: 2px solid green;           /* Green border */
+    border-radius: 10px;               /* Rounded corners */
+    padding: 5px;                      /* Padding for better text display */
+    font-weight: bold;                 /* Bold text font */
+}
+QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}
+QPushButton:pressed {
+    background-color: #005500;         /* Darker green when pressed */
+    color: white;                      /* White text color when pressed */
+}
+</string>
+     </property>
      <property name="text">
       <string>Start</string>
      </property>
@@ -48,8 +93,27 @@
        <x>110</x>
        <y>180</y>
        <width>83</width>
-       <height>25</height>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    color: white;                      /* White text color */
+    background-color: #333333;         /* Dark grey background, slightly lighter than black for contrast */
+    border: 2px solid green;           /* Green border */
+    border-radius: 10px;               /* Rounded corners */
+    padding: 5px;                      /* Padding for better text display */
+    font-weight: bold;                 /* Bold text font */
+}
+QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}
+QPushButton:pressed {
+    background-color: #005500;         /* Darker green when pressed */
+    color: white;                      /* White text color when pressed */
+}
+</string>
      </property>
      <property name="text">
       <string>Log</string>
@@ -58,11 +122,23 @@
     <widget class="QProgressBar" name="Battery">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>17</x>
        <y>10</y>
-       <width>118</width>
+       <width>131</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid green;           /* Green border */
+    border-radius: 5px;                /* Rounded corners */
+    background-color: black;           /* Black background for the entire progress bar */
+}
+QProgressBar::chunk {
+    background-color: green;           /* Green color for the progress chunk */
+    width: 20px;                       /* Width of the chunk segments */
+}
+</string>
      </property>
      <property name="value">
       <number>24</number>
@@ -71,11 +147,33 @@
     <widget class="QDateTimeEdit" name="dateTimeEdit">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>190</y>
-       <width>194</width>
-       <height>26</height>
+       <x>200</x>
+       <y>180</y>
+       <width>201</width>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QDateTimeEdit {
+    color: white;                      /* White text color for readability */
+    background-color: #333333;         /* Dark grey background, lighter than black for contrast */
+    border: 2px solid green;           /* Solid green border */
+    border-radius: 8px;                /* Rounded corners */
+    padding: 5px;                      /* Padding around the text */
+    font-weight: bold;                 /* Bold text for better visibility */
+}
+QDateTimeEdit::drop-down {
+    subcontrol-origin: padding;        /* Align the drop-down button */
+    subcontrol-position: top right;    /* Position to the top right */
+    width: 30px;                       /* Width of the drop-down button */
+    border-left: 1px solid green;      /* Border to separate from the edit area */
+}
+QDateTimeEdit::down-arrow {
+    image: url(:/icons/down-arrow.png); /* Custom image for the arrow */
+    width: 16px;                       /* Width of the arrow */
+    height: 16px;                      /* Height of the arrow */
+}
+</string>
      </property>
     </widget>
     <widget class="QPushButton" name="Pause">
@@ -86,6 +184,25 @@
        <width>83</width>
        <height>25</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    color: white;                      /* White text color */
+    background-color: #333333;         /* Dark grey background, slightly lighter than black for contrast */
+    border: 2px solid green;           /* Green border */
+    border-radius: 10px;               /* Rounded corners */
+    padding: 5px;                      /* Padding for better text display */
+    font-weight: bold;                 /* Bold text font */
+}
+QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}
+QPushButton:pressed {
+    background-color: #005500;         /* Darker green when pressed */
+    color: white;                      /* White text color when pressed */
+}
+</string>
      </property>
      <property name="text">
       <string>Pause</string>
@@ -100,6 +217,25 @@
        <height>25</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    color: white;                      /* White text color */
+    background-color: #333333;         /* Dark grey background, slightly lighter than black for contrast */
+    border: 2px solid green;           /* Green border */
+    border-radius: 10px;               /* Rounded corners */
+    padding: 5px;                      /* Padding for better text display */
+    font-weight: bold;                 /* Bold text font */
+}
+QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}
+QPushButton:pressed {
+    background-color: #005500;         /* Darker green when pressed */
+    color: white;                      /* White text color when pressed */
+}
+</string>
+     </property>
      <property name="text">
       <string>Stop</string>
      </property>
@@ -113,6 +249,25 @@
        <height>25</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    color: white;                      /* White text color */
+    background-color: #333333;         /* Dark grey background, slightly lighter than black for contrast */
+    border: 2px solid green;           /* Green border */
+    border-radius: 10px;               /* Rounded corners */
+    padding: 5px;                      /* Padding for better text display */
+    font-weight: bold;                 /* Bold text font */
+}
+QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}
+QPushButton:pressed {
+    background-color: #005500;         /* Darker green when pressed */
+    color: white;                      /* White text color when pressed */
+}
+</string>
+     </property>
      <property name="text">
       <string>Resume</string>
      </property>
@@ -121,10 +276,21 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>220</y>
+       <y>230</y>
        <width>381</width>
        <height>192</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTextBrowser {
+    color: white;                      /* White text color for readability */
+    background-color: #333333;         /* Dark grey background, lighter than black for contrast */
+    border: 2px solid green;           /* Solid green border */
+    border-radius: 8px;                /* Rounded corners for a smoother look */
+    padding: 10px;                     /* Padding around the text for a better text display */
+    font: bold 12pt &quot;Arial&quot;;           /* Set a specific font and size for better readability */
+}
+</string>
      </property>
     </widget>
     <widget class="QProgressBar" name="SessionPr">
@@ -132,9 +298,21 @@
       <rect>
        <x>410</x>
        <y>280</y>
-       <width>118</width>
+       <width>151</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid green;           /* Green border */
+    border-radius: 5px;                /* Rounded corners */
+    background-color: black;           /* Black background for the entire progress bar */
+}
+QProgressBar::chunk {
+    background-color: green;           /* Green color for the progress chunk */
+    width: 20px;                       /* Width of the chunk segments */
+}
+</string>
      </property>
      <property name="value">
       <number>24</number>
@@ -145,9 +323,28 @@
       <rect>
        <x>410</x>
        <y>310</y>
-       <width>121</width>
-       <height>17</height>
+       <width>151</width>
+       <height>41</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    color: #f8f8ff;                  /* Creamy white text for a soft contrast */
+    font: bold 11pt &quot;Times New Roman&quot;; /* A classic serif font */
+    background-color: #282828;       /* Deep, dark gray background */
+    border: 2px solid #8fbc8f;       /* Muted green border, a classic and soft shade */
+    border-radius: 5px;              /* Softly rounded corners */
+    padding: 10px;                   /* Ample padding around the text */
+    text-align: center;              /* Center-align text */
+
+    /* Text shadow for a subtle embossed look */
+    text-shadow: 1px 1px 1px #505050;
+
+    /* Subtle gradient background for a touch of sophistication */
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #282828, stop:1 #3e3e3e);
+}
+</string>
      </property>
      <property name="text">
       <string>Session Progress</string>
@@ -156,27 +353,78 @@
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>40</x>
        <y>40</y>
-       <width>62</width>
-       <height>17</height>
+       <width>101</width>
+       <height>51</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    color: #f8f8ff;                  /* Creamy white text for a soft contrast */
+    font: bold 14pt &quot;Times New Roman&quot;; /* A classic serif font */
+    background-color: #282828;       /* Deep, dark gray background */
+    border: 2px solid #8fbc8f;       /* Muted green border, a classic and soft shade */
+    border-radius: 5px;              /* Softly rounded corners */
+    padding: 10px;                   /* Ample padding around the text */
+    text-align: center;              /* Center-align text */
+
+    /* Text shadow for a subtle embossed look */
+    text-shadow: 1px 1px 1px #505050;
+
+    /* Subtle gradient background for a touch of sophistication */
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #282828, stop:1 #3e3e3e);
+}
+</string>
      </property>
      <property name="text">
       <string>Battery</string>
      </property>
     </widget>
+    <widget class="QProgressBar" name="counter">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>10</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>20</y>
-       <width>62</width>
-       <height>17</height>
+       <x>510</x>
+       <y>40</y>
+       <width>121</width>
+       <height>51</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    color: #f8f8ff;                  /* Creamy white text for a soft contrast */
+    font: bold 14pt &quot;Times New Roman&quot;; /* A classic serif font */
+    background-color: #282828;       /* Deep, dark gray background */
+    border: 2px solid #8fbc8f;       /* Muted green border, a classic and soft shade */
+    border-radius: 5px;              /* Softly rounded corners */
+    padding: 10px;                   /* Ample padding around the text */
+    text-align: center;              /* Center-align text */
+
+    /* Text shadow for a subtle embossed look */
+    text-shadow: 1px 1px 1px #505050;
+
+    /* Subtle gradient background for a touch of sophistication */
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #282828, stop:1 #3e3e3e);
+}
+</string>
+     </property>
      <property name="text">
-      <string/>
+      <string>Time Left</string>
      </property>
     </widget>
    </widget>
@@ -188,6 +436,12 @@
       <width>121</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}</string>
     </property>
     <property name="text">
      <string>Power</string>
@@ -201,6 +455,12 @@
       <width>83</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton:hover {
+    background-color: green;           /* Change background to green on hover */
+    color: black;                      /* Change text color to black on hover */
+}</string>
     </property>
     <property name="text">
      <string>Disconnect</string>
@@ -239,88 +499,19 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>959</x>
-      <y>150</y>
-      <width>261</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="mainLayout"/>
-   </widget>
-   <widget class="QCustomPlot" name="wavePlot" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>490</y>
-      <width>381</width>
-      <height>351</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="wavePlot_2" native="true">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>490</y>
-      <width>371</width>
-      <height>351</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="wavePlot_3" native="true">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>490</y>
-      <width>481</width>
-      <height>331</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="wavePlot_4" native="true">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>430</y>
-      <width>481</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <widget class="QCustomPlot" name="wavePlot_5" native="true">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>50</y>
-       <width>481</width>
-       <height>331</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1557</width>
-     <height>22</height>
+     <width>1024</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

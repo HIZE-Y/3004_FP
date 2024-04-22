@@ -42,7 +42,7 @@ private slots:
     void treatment(double t[]);
     void handleFlash();
 
-
+    void countDownF();
    // void afterTreatment(QCustomPlot *customPlot);
 
     void handleRedFlash();
@@ -62,6 +62,8 @@ private:
     QTimer *timer2;
     QTimer *timer;
     QTimer  *timer3;
+    QTimer *contactTimer;
+    QTimer *countDown;
     int flashCount;
     int redFlashCount;
     QTimer *flash;
@@ -83,6 +85,7 @@ private:
      SignalData tsignalArray4[4];      // Array for one type of signal
      SignalData tsignalArray5[4];     // Another array for a different type
      SignalData tsignalArray6[4];
+      SignalData tsignalArray7[4];
 //    SignalData treaTeadtedData;
 //    SignalData treaTeadtedData2;
 //    SignalData treaTeadtedData3;

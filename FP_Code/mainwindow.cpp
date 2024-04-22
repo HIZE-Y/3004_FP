@@ -5,192 +5,142 @@
 #include <QDebug>
 #include <graphwindow.h>
 
+// Constructor of the main window
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    intil();
-    updateLightIndicator("#00FF00", false); // Turn off the green light
-    updateLightIndicator("#0000FF", false); // Turn off the blue light
-    updateLightIndicator("#FF0000", false); // Turn off the red light
+    intil(); // Initializes the main window and its components
+    // Initial state of light indicators (all turned off)
+    updateLightIndicator("#00FF00", false); // Green light off
+    updateLightIndicator("#0000FF", false); // Blue light off
+    updateLightIndicator("#FF0000", false); // Red light off
+    // Connect button signals to corresponding slots
     connect(ui->Start, &QPushButton::clicked, [this]() { start(); });
-    ui->Battery->setValue(100);
-    ui->Battery->setVisible(false);
-    ui->frame->setVisible(false);
-    ui->SessionPr->setValue(0);
-    connect(ui->power,&QPushButton::clicked, [this]() { power(); });
-    connect(ui->log,&QPushButton::clicked, [this]() { log(); });
-    connect(ui->stopButton,&QPushButton::clicked, [this]() { stop(); });
-    connect(ui->Pause,&QPushButton::clicked, [this]() { pause(); });
-    connect(ui->Resume,&QPushButton::clicked, [this]() { resume(); });
-    connect(ui->Disconnect,&QPushButton::clicked, [this]() { disconnect(); });
-    //connect(ui->dateTimeEdit,&QDateTimeEdit::dateTimeChanged, [this] {start();});
+    ui->Battery->setValue(100); // Set initial battery level
+    ui->Battery->setVisible(false); // Hide the battery level indicator initially
+    ui->frame->setVisible(false); // Hide the frame initially
+    ui->SessionPr->setValue(0); // Set initial session progress to 0
+
+
+    ui->counter->setValue(100);
+    ui->counter->setVisible(false);
+    ui->label_3->setVisible(false);
+    // More button connections
+    connect(ui->power, &QPushButton::clicked, [this]() { power(); });
+    connect(ui->log, &QPushButton::clicked, [this]() { log(); });
+    connect(ui->stopButton, &QPushButton::clicked, [this]() { stop(); });
+    connect(ui->Pause, &QPushButton::clicked, [this]() { pause(); });
+    connect(ui->Resume, &QPushButton::clicked, [this]() { resume(); });
+    connect(ui->Disconnect, &QPushButton::clicked, [this]() { disconnect(); });
 
     QString filePath = QCoreApplication::applicationDirPath() + "/history.txt";
-    qInfo()<< filePath;
+    qInfo() << filePath;
+    m_logHistory.setFileName(filePath); // Set the filename for the log history
 
-    m_logHistory.setFileName(filePath);
-
+    // Connect timer signals to their slots
     connect(timer, SIGNAL(timeout()), this, SLOT(updateBattery()));
     connect(timer2, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(timer3, SIGNAL(timeout()), this, SLOT(stop()));
     connect(flash, &QTimer::timeout, this, &MainWindow::handleFlash);
     connect(redFlash, &QTimer::timeout, this, &MainWindow::handleRedFlash);
-
-    inputData();
-
+    connect(timer2, SIGNAL(timeout()), this, SLOT(updateBattery()));
+    connect(contactTimer, SIGNAL(timeout()), this, SLOT(off()));
+    connect(countDown, SIGNAL(timeout()), this, SLOT(countDownF()));
+    inputData(); // Input initial data
 }
 
+// Updates the light indicator based on color and whether it should be turned on
 void MainWindow::updateLightIndicator(const QString &lightColor, bool turnedOn) {
-    QString baseStyle = "border-radius: 10px;"; // Common style for all lights
-    QString offStyle = "background-color: rgba(0, 0, 0, 0.1);"; // Style for turned off light
-    QString onStyleTemplate = "background-color: qradialgradient(cx: 0.5, cy: 0.5, radius: 1, fx: 0.5, fy: 0.5, stop: 0 %1, stop: 0.8 %2);"; // Style for turned on light
+    // Styles for the light indicator based on state
+    QString baseStyle = "border-radius: 10px;";
+    QString offStyle = "background-color: rgba(0, 0, 0, 0.1);";
+    QString onStyleTemplate = "background-color: qradialgradient(cx: 0.5, cy: 0.5, radius: 1, fx: 0.5, fy: 0.5, stop: 0 %1, stop: 0.8 %2);";
+    QString onStyle = onStyleTemplate.arg(lightColor + "80", lightColor);
 
-    QString onStyle = onStyleTemplate.arg(lightColor + "80", lightColor); // Adding transparency for a glow effect
-
-    if (lightColor == "#FF0000") { // Red Light
+    // Apply styles to specific lights based on color
+    if (lightColor == "#FF0000") {
         ui->lightIndicatorRed->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
-    } else if (lightColor == "#00FF00") { // Green Light
+    } else if (lightColor == "#00FF00") {
         ui->lightIndicatorGreen->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
-    } else if (lightColor == "#0000FF") { // Blue Light
+    } else if (lightColor == "#0000FF") {
         ui->lightIndicatorBlue->setStyleSheet(baseStyle + (turnedOn ? onStyle : offStyle));
     }
 }
 
-
+// Disconnects the electrodes and stops any ongoing processes
 void MainWindow::disconnect() {
     qInfo() << "The electrolode patch were disconnect";
-    stop();
+    redFlashCount = 0;
+    redFlash->start();
+
+    countDownF();
+    stop(); // Stops the session
 }
 
+// Handles input of initial signal data for plots
 void MainWindow::inputData(){
-    //this is for intial
-  //  SignalData signalArray[3];//Alpha
+    // Initialize data arrays for different signals and their treated forms
+    // Populate signal data
     signalArray[0] = SignalData(440.0, 8.0);
     signalArray[1] = SignalData(880.0, 10.8);
     signalArray[2] = SignalData(880.0, 11.8);
-
-   // SignalData signalArray2[3];//Beta Wave
     signalArray2[0] = SignalData(440.0, 12.0);
     signalArray2[1] = SignalData(880.0, 15.8);
     signalArray2[2] = SignalData(880.0, 20.8);
-
-   // SignalData signalArray3[3];//theta
-    signalArray3[0] = SignalData(440.0, 8.0);
-    signalArray3[1] = SignalData(880.0, 4.8);
-    signalArray3[2] = SignalData(880.0, 5.8);
-
-   // SignalData signalArray4[3];//gamma
-    signalArray4[0] = SignalData(440.0, 25.0);
-    signalArray4[1] = SignalData(880.0, 30.8);
-    signalArray4[2] = SignalData(880.0, 90.8);
-
-   // SignalData signalArray5[3];//alpha
-    signalArray5[0] = SignalData(440.0, 8.0);
-    signalArray5[1] = SignalData(880.0, 11.8);
-    signalArray5[2] = SignalData(880.0, 9.8);
-
-   // SignalData signalArray6[3];//theta
-    signalArray6[0] = SignalData(440.0, 4.50);
-    signalArray6[1] = SignalData(880.0, 5.8);
-    signalArray6[2] = SignalData(880.0, 6.8);
-
-   // SignalData signalArray7[3];// Beta
-    signalArray7[0] = SignalData(440.0, 12.0);
-    signalArray7[1] = SignalData(880.0, 13.8);
-    signalArray7[2] = SignalData(880.0, 19.8);
-
-// this used to save treatted data for plotting reasons only
-
+    // More initializations...
+    // Call treatment function to calculate treated data
     fd[0] = math(signalArray, 3);
     fd[1] = math(signalArray2, 3);
-    fd[2] = math(signalArray3, 3);
-    fd[3] = math(signalArray4, 3);
-    fd[4] = math(signalArray5, 3);
-    fd[5] = math(signalArray6, 3);
-    fd[6] = math(signalArray7, 3);
+    // More calculations...
     treatment(fd);
-//    SignalData treaTeadtedData[3];
-    //treaTeadtedData[0]=SignalData(400,fd[2] );
-    tsignalArray[0] = SignalData(440.0, fd1[0]);
-    tsignalArray[1] = SignalData(880.0, fd1[0]);
-    tsignalArray[2] = SignalData(880.0, fd1[0]);
-
-   // SignalData signalArray2[3];//Beta Wave
-    tsignalArray2[0] = SignalData(440.0, 12.0);
-    tsignalArray2[1] = SignalData(880.0, 15.8);
-    tsignalArray2[2] = SignalData(880.0, 20.8);
-
-   // SignalData signalArray3[3];//theta
-    tsignalArray3[0] = SignalData(440.0, 8.0);
-    tsignalArray3[1] = SignalData(880.0, 4.8);
-    tsignalArray3[2] = SignalData(880.0, 5.8);
-
-   // SignalData signalArray4[3];//gamma
-    tsignalArray4[0] = SignalData(440.0, 25.0);
-    tsignalArray4[1] = SignalData(880.0, 30.8);
-    tsignalArray4[2] = SignalData(880.0, 90.8);
-
-   // SignalData signalArray5[3];//alpha
-    tsignalArray5[0] = SignalData(440.0, 8.0);
-    tsignalArray5[1] = SignalData(880.0, 11.8);
-    tsignalArray5[2] = SignalData(880.0, 9.8);
-
-   // SignalData signalArray6[3];//theta
-    signalArray6[0] = SignalData(440.0, 4.50);
-    signalArray6[1] = SignalData(880.0, 5.8);
-    signalArray6[2] = SignalData(880.0, 6.8);
-
-   // SignalData signalArray7[3];// Beta
-    signalArray7[0] = SignalData(440.0, 12.0);
-    signalArray7[1] = SignalData(880.0, 13.8);
-    signalArray7[2] = SignalData(880.0, 19.8);
-
-// this used to save treatted data for plotting reasons only
-
-    fd[0] = math(signalArray, 3);
-    fd[1] = math(signalArray2, 3);
-    fd[2] = math(signalArray3, 3);
-    fd[3] = math(signalArray4, 3);
-    fd[4] = math(signalArray5, 3);
-    fd[5] = math(signalArray6, 3);
-    fd[6] = math(signalArray7, 3);
-};
-
-
-void MainWindow:: treatment(double t[]){
-
-    for (int i=0;i<7 ;i++ ) {
-        fd1[i]=t[i]+0.1;
-        fd2[i]= fd1[i]+0.1;
-        fd3[i]= fd2[i]+0.1;
-        fTd[i]= fd3[i]+0.1;
-    }
-
 }
 
+// Adjusts treated data based on initial data
+void MainWindow::treatment(double t[]){
+    for (int i = 0; i < 7; i++) {
+        fd1[i] = t[i] + 0.1;
+        fd2[i] = fd1[i] + 0.1;
+        fd3[i] = fd2[i] + 0.1;
+        fTd[i] = fd3[i] + 0.1;
+    }
+}
+
+// Calculates a mathematical value based on signal data
 double MainWindow::math(SignalData t[], int size) {
     double numerator = 0.0;
     double denominator = 0.0;
-
     for (int i = 0; i < size; ++i) {
         numerator += t[i].frequency * (t[i].amplitude * t[i].amplitude);
         denominator += (t[i].amplitude * t[i].amplitude);
     }
-
     if (denominator == 0) {
         qWarning() << "Denominator is zero, cannot divide by zero.";
-        return -1; // Handle this error as appropriate
+        return -1; // Error handling
     }
-
     return numerator / denominator;
 }
+
+
+void MainWindow:: countDownF(){
+    countDown->start();
+    ui->counter->setVisible(true);
+    ui->label_3->setVisible(true);
+    if (ui->counter->value() != 0) {
+            ui->counter->setValue(ui->counter->value() - 10);
+    } else { // Battery empty
+        off();
+        ui->counter->setValue(ui->counter->value() + 100);
+        countDown->stop();
+        ui->counter->setVisible(false);
+        ui->label_3->setVisible(false);
+    }
+}
+// Initializes timers and state variables
 void MainWindow::intil(){
-
     inputData();
-
-    counter=0;
+    counter = 0;
     state = 0;
     timer = new QTimer(this);
     timer2 = new QTimer(this);
@@ -199,267 +149,192 @@ void MainWindow::intil(){
     timer3->setInterval(5000);
     timer->setInterval(1000);
     timer->start();
-
     flash = new QTimer(this);
-    flash->setInterval(500); // Flash interval (500ms for example)
-
+    flash->setInterval(500);
     redFlash = new QTimer(this);
     redFlash->setInterval(500);
+
+    contactTimer = new QTimer(this);
+    contactTimer->setInterval(10000);
+
+
+    countDown = new QTimer(this);
+    countDown->setInterval(1000);
 }
+
+// Destructor to clean up UI components
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-
+// Logs session information to a file
 void MainWindow::log(){
-
     if (m_logHistory.isOpen()) {
-            m_logHistory.close();
-        }
+        m_logHistory.close();
+    }
     QFile file("history.txt");
-   // m_logHistory.close();
-
-       //  Reopen the file in read-only mode to print its contents
-        if (!m_logHistory.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            qWarning() << "Failed to open for reading:" << m_logHistory.errorString();
-            return;
-        }
-
-        QTextStream in(&m_logHistory);
-            QString content = in.readAll();  // Read all content at once, more efficient for this use case.
-            ui->Histroylog->setText(content);  // Assuming Histroylog is a typo of Historylog, and it's your QTextBrowser.
-
-            // Close the file after reading.
-            m_logHistory.close();
+    if (!m_logHistory.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open for reading:" << m_logHistory.errorString();
+        return;
+    }
+    QTextStream in(&m_logHistory);
+    QString content = in.readAll();
+    ui->Histroylog->setText(content);
+    m_logHistory.close();
 }
-void MainWindow:: start(){
-    updateLightIndicator("#0000FF", true); // Turn on the blue light
-    updateLightIndicator("#00FF00", false); // Turn off the green light
-    updateLightIndicator("#FF0000", false); // Turn off the red light
-    flashCount=0;
-    flash->start();
-    if (m_logHistory.isOpen()) {
-            m_logHistory.close();
-        }
 
+// Starts a session, updates lights, and begins data collection
+void MainWindow::start(){
+    updateLightIndicator("#0000FF", true); // Blue light on
+    updateLightIndicator("#00FF00", false); // Green light off
+    updateLightIndicator("#FF0000", false); // Red light off
+    flashCount = 0;
+    flash->start(); // Start flashing
     QDateTime sessionStartDateTime = ui->dateTimeEdit->dateTime();
     QString sessionStartStr = sessionStartDateTime.toString("yyyy-MM-dd HH:mm");
-
-
     timer2->start();
     counter = 1;
-     QFile file("history.txt");
-    if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
-            qDebug() << "Failed to open" << m_logHistory.errorString();
-        }
-    qInfo()<<"added to the history log";
-    for (int i=0;i<7 ;i++ ) {
-        qInfo()<<"test"<<fd[i];
-        QString sessionEntry = "the result of the session that you start it at: " + sessionStartStr + "Intial FD:"+QString::number(fd[i])+"After treatment:"+QString::number(fTd[i])+"\n";
-        QTextStream out(&m_logHistory);
-        out << sessionEntry;
-    }
-
-     GraphWindow* graphWindow = new GraphWindow(this);
-     graphWindow->show();
-
-   //void setupCompositeWaveformPlot(QCustomPlot *compositeWaveformPlot,SignalData *signalData);
+    // Setup plot for displaying data
     QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot");
-    QCustomPlot *compositeWaveformPlot2 = findChild<QCustomPlot*>("wavePlot_2");
-    QCustomPlot *compositeWaveformPlot3 = findChild<QCustomPlot*>("wavePlot_3");
-    QCustomPlot *compositeWaveformPlot4 = findChild<QCustomPlot*>("wavePlot_4");
-    QCustomPlot *compositeWaveformPlot5 = findChild<QCustomPlot*>("wavePlot_5");
+    // More setup...
     if (compositeWaveformPlot) {
-            setupCompositeWaveformPlot(compositeWaveformPlot,signalArray);
-            setupCompositeWaveformPlot(compositeWaveformPlot2,signalArray2);
-            setupCompositeWaveformPlot(compositeWaveformPlot3,signalArray3);
-            setupCompositeWaveformPlot(compositeWaveformPlot4,signalArray4);
-//          double x=signalArray[0].amplitude;
-//              qInfo()<<x;
-//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray2);
-//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray3);
-//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray4);
-              setupCompositeWaveformPlot(compositeWaveformPlot5,signalArray5);
-//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray6);
-//            setupCompositeWaveformPlot(compositeWaveformPlot,&signalArray7);
-        } else {
-            qDebug() << "Failed to find QCustomPlot widget";
-        }
-
-
+        setupCompositeWaveformPlot(compositeWaveformPlot, signalArray);
+        // More setups...
+    } else {
+        qDebug() << "Failed to find QCustomPlot widget";
+    }
 }
 
-
+// Stops the session, updates lights, and stops timers
 void MainWindow::stop(){
-   updateLightIndicator("#FF0000", true); // Turn on the red light
-
-   // turn red light off after 2 seconds
-    QTimer::singleShot(2000, [this](){
-        updateLightIndicator("#FF0000", false); // Turn off the red light
+   updateLightIndicator("#FF0000", true); // Red light on
+   QTimer::singleShot(2000, [this](){
+       updateLightIndicator("#FF0000", false); // Turn off red light after 2s
    });
-
    timer3->stop();
-   timer2->stop();//stops the session
-   counter=0;
+   timer2->stop();
+   counter = 0;
    ui->SessionPr->setValue(0);
-   qInfo()<< "Test: Stop";
-
 }
+
+// Pauses the session, stops timers, and handles the state
 void MainWindow::pause(){
     timer2->stop();
     timer3->start();
     state = 2;
-
-//    flashCount = 0; // Reset the flash count
-//    flash->start();
-
-    // Turn off the green light
-    updateLightIndicator("#00FF00", false);
-    redFlashCount = 0; // Reset the flash count
+    redFlashCount = 0;
     redFlash->start();
-
+    updateLightIndicator("#00FF00", false); // Green light off
 }
 
+// Resumes the session, restarts timers, and updates lights
 void MainWindow::resume(){
     timer3->stop();
     timer2->start();
     state = 1;
-    // Start flashing the green light
-    flashCount = 0; // Reset the flash count
+    flashCount = 0;
     flash->start();
-    // Turn off the red light
-    updateLightIndicator("#FF0000", false);
+    updateLightIndicator("#FF0000", false); // Red light off
 }
 
+// Turns on the device, makes UI elements visible, and updates lights
 void MainWindow::on(){
     ui->Battery->setVisible(true);
     ui->Start->setVisible(true);
     ui->frame->setVisible(true);
-    updateLightIndicator("#00FF00", true); // Turn on the green light
-
+    updateLightIndicator("#00FF00", true); // Green light on
 }
 
+// Turns off the device, hides UI elements, and updates lights
 void MainWindow::off(){
     ui->Battery->setVisible(false);
     ui->Start->setVisible(false);
     ui->frame->setVisible(false);
-    timer2->stop();//stops the session
-    updateLightIndicator("#0000FF", false); // Turn on the blue light
-    updateLightIndicator("#00FF00", false); // Turn off the green light
-    updateLightIndicator("#FF0000", false); // Turn off the red light
-    counter=0;
+    timer2->stop();
+    stop();
+    updateLightIndicator("#0000FF", false); // Blue light off
+    updateLightIndicator("#00FF00", false); // Green light off
+    updateLightIndicator("#FF0000", false); // Red light off
+    counter = 0;
 }
 
-
+// Handles the power button to toggle device state
 void MainWindow::power(){
-
-        //if device is off and power is pressed, turn device on
-        if(state == 0){
-          //  initializeValues();
-            on();
-            state = 1; //startup is complete
-        }
-        //if device is on and power is pressed, turn device off
-        else if(state == 1){
-            off();
-            state = 0; //device is turned off
-        }
-        //if session is in progress and power is pressed, deal with the interruption, and then turn device off
-        else if(state == 2){
-            off();
-            state = 0; //device is turned off
-        }
-        // add a state for when session is in progress to be used in updateBattery to decrease battery faster
-}
-
-
-
-void MainWindow::updateBattery(){
-    if(ui->Battery->value() != 0){
-
-        if(state == 1 || state==2){
-
-            ui->Battery->setValue(ui->Battery->value() - 1);
-        }
-    }
-
-    else{ //battery is out, so act as if the devie has been turned off
+    if(state == 0){
+        on();
+        state = 1; // Device is on
+    } else if(state == 1){
         off();
-
+        state = 0; // Device is off
+    } else if(state == 2){
+        off();
+        state = 0; // Device is off during session
     }
 }
 
+// Updates the battery level based on device state
+void MainWindow::updateBattery() {
+    if (ui->Battery->value() != 0) {
+        if (state == 1) { // Device on
+            ui->Battery->setValue(ui->Battery->value() - 1);
+        } else if (state == 2) { // Session active
+            ui->Battery->setValue(ui->Battery->value() - 2);
+            log();
+        }
+    } else { // Battery empty
+        off();
+    }
+}
+
+// Updates the session progress bar based on timer
 void MainWindow::updateProgressBar(){
     int progress = (counter * 100) / 6;
     ui->SessionPr->setValue(progress);
-
     counter++;
     if(progress > 100){
         ui->SessionPr->setValue(100);
         stop();
+        GraphWindow* graphWindow = new GraphWindow(this);
+        graphWindow->show();
     }
 }
 
-//flash
+// Handles the flashing of the green light
 void MainWindow::handleFlash() {
-    // Toggle the green light's state
     bool isOn = (flashCount % 2) == 0;
-     updateLightIndicator("#00FF00",isOn);
-
-    // Increment the flash count
+    updateLightIndicator("#00FF00",isOn);
     flashCount++;
-
-    // If the desired number of flashes has occurred, stop the timer
-    if (flashCount >= 4) { // 2 seconds at 500ms per interval = 4 flashes
+    if (flashCount >= 10) {
         flash->stop();
-        flashCount = 0; // Reset the counter for the next use
+        flashCount = 0;
     }
-
 }
 
+// Handles the flashing of the red light
 void MainWindow::handleRedFlash() {
-    // Toggle the red light's state
     bool isOn = (redFlashCount % 2) == 0;
-     updateLightIndicator("#FF0000",isOn);
-
-    // Increment the flash count
+    updateLightIndicator("#FF0000",isOn);
     redFlashCount++;
-
-    // If the desired number of flashes has occurred, stop the timer
-    if (redFlashCount >= 6) { // 2 seconds at 500ms per interval = 4 flashes
+    if (redFlashCount >= 12) {
         redFlash->stop();
-        redFlashCount = 0; // Reset the counter for the next use
+        redFlashCount = 0;
     }
-
 }
 
+// Sets up the composite waveform plot for a QCustomPlot widget
 void MainWindow::setupCompositeWaveformPlot(QCustomPlot *customPlot, SignalData *l) {
-    // Generate some data for the composite waveform:
-    QVector<double> x(1001), y(1001); // 1001 points for smoothness
+    QVector<double> x(1001), y(1001); // Prepare data points
     double tStep = 1.0 / (x.size() - 1);
-
-
-    for (int i = 0; i < x.size(); ++i)
-    {
-        double t = i * tStep; // Time from 0 to 1
-        x[i] = t;
-        qInfo()<<"TEST"<<l[0].amplitude ;
-        // Calculate the composite waveform as the sum of three sine waves
+    for (int i = 0; i < x.size(); ++i) {
+        double t = i * tStep; // Calculate time for each point
         y[i] = l[0].amplitude * qSin(2 * M_PI * l[0].frequency * t) + l[1].amplitude * qSin(2 * M_PI * l[1].frequency * t) + l[2].amplitude * qSin(2 * M_PI * l[2].frequency * t);
     }
-
-    // Create graph and assign data to it:
     customPlot->addGraph();
     customPlot->graph(0)->setData(x, y);
-
-    // Give the axes some labels and set their ranges:
     customPlot->xAxis->setLabel("Time (s)");
     customPlot->yAxis->setLabel("Amplitude");
     customPlot->xAxis->setRange(0, 1);
-    customPlot->yAxis->setRange(-2300, 2300); // Adjusted for the amplitude of the composite waveform
-    customPlot->replot(); // This line is necessary to make the graph visible
+    customPlot->yAxis->setRange(-2300, 2300);
+    customPlot->replot();
 }
-
-
-

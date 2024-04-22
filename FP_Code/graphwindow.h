@@ -18,6 +18,7 @@ class GraphWindow : public QMainWindow
 public:
     GraphWindow(QWidget *parent = nullptr);
     ~GraphWindow();
+    void log();
 private:
     Ui::Form *ui;
     QCustomPlot *customPlot;
@@ -27,12 +28,14 @@ private:
     void treatment(double t[]);
     double math(SignalData array[], int size);
     SignalData signalArray[3];      // Array for one type of signal
-     SignalData signalArray2[3];     // Another array for a different type
-     SignalData signalArray3[3];
-     SignalData signalArray4[3];      // Array for one type of signal
-      SignalData signalArray5[3];     // Another array for a different type
-      SignalData signalArray6[3];
-     SignalData signalArray7[3];
+    SignalData signalArray2[3];     // Another array for a different type
+    SignalData signalArray3[3];
+    SignalData signalArray4[3];      // Array for one type of signal
+    SignalData signalArray5[3];     // Another array for a different type
+    SignalData signalArray6[3];
+    SignalData signalArray7[3];
+
+    QFile m_logHistory;
 
 
      SignalData tsignalArray[4];      // Array for one type of signal
@@ -41,6 +44,7 @@ private:
      SignalData tsignalArray4[4];      // Array for one type of signal
      SignalData tsignalArray5[4];     // Another array for a different type
      SignalData tsignalArray6[4];
+     SignalData tsignalArray7[4];
 
      double fd[7];
      double fTd[7];
@@ -50,4 +54,3 @@ private:
 };
 
 #endif // GRAPHWINDOW_H
-

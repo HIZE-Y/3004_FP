@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
-    <height>500</height>
+    <width>1389</width>
+    <height>1310</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,12 +16,25 @@
   <widget class="QCustomPlot" name="wavePlot10" native="true">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>210</y>
+     <x>10</x>
+     <y>60</y>
      <width>271</width>
      <height>161</height>
     </rect>
    </property>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alpha waves</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -39,8 +52,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>20</y>
+     <x>670</x>
+     <y>30</y>
      <width>141</width>
      <height>41</height>
     </rect>
@@ -48,6 +61,305 @@
    <property name="text">
     <string>Post treatment Graphs</string>
    </property>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_3" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>390</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>10</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Theta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_4" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>560</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Gamma waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_5" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>730</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alpha waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_6" native="true">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>60</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>0</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Theta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="wavePlot10_7" native="true">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>240</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat" native="true">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>70</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alpha waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_2" native="true">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>240</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_3" native="true">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>410</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Theta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_4" native="true">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>580</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> Gamma waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_5" native="true">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>750</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_6" native="true">
+   <property name="geometry">
+    <rect>
+     <x>900</x>
+     <y>70</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_18">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Theta waves</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCustomPlot" name="treat_7" native="true">
+   <property name="geometry">
+    <rect>
+     <x>900</x>
+     <y>240</y>
+     <width>271</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>10</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beta waves</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
