@@ -35,7 +35,7 @@ private:
     SignalData signalArray6[3];
     SignalData signalArray7[3];
 
-    QFile m_logHistory;
+    QFile m_logHistoryTwo;
 
 
      SignalData tsignalArray[4];      // Array for one type of signal

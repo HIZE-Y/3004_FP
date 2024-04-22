@@ -378,6 +378,7 @@ compiler_moc_header_clean:
 moc_graphwindow.cpp: ../FP_Code/graphwindow.h \
 		../FP_Code/qcustomplot.h \
 		ui_graphwindow.h \
+		../FP_Code/signaldata.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Desktop/3004_FP/build-FP_Code-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Desktop/3004_FP/FP_Code -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FP_Code/graphwindow.h -o moc_graphwindow.cpp
@@ -407,8 +408,7 @@ ui_graphwindow.h: ../FP_Code/graphwindow.ui \
 	/usr/lib/qt5/bin/uic ../FP_Code/graphwindow.ui -o ui_graphwindow.h
 
 ui_mainwindow.h: ../FP_Code/mainwindow.ui \
-		/usr/lib/qt5/bin/uic \
-		../FP_Code/qcustomplot.h
+		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../FP_Code/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -423,7 +423,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 graphwindow.o: ../FP_Code/graphwindow.cpp ../FP_Code/graphwindow.h \
 		../FP_Code/qcustomplot.h \
-		ui_graphwindow.h
+		ui_graphwindow.h \
+		../FP_Code/signaldata.h \
+		../FP_Code/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphwindow.o ../FP_Code/graphwindow.cpp
 
 qcustomplot.o: ../FP_Code/qcustomplot.cpp ../FP_Code/qcustomplot.h
@@ -439,7 +441,9 @@ main.o: ../FP_Code/main.cpp ../FP_Code/mainwindow.h \
 mainwindow.o: ../FP_Code/mainwindow.cpp ../FP_Code/mainwindow.h \
 		../FP_Code/signaldata.h \
 		../FP_Code/qcustomplot.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../FP_Code/graphwindow.h \
+		ui_graphwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FP_Code/mainwindow.cpp
 
 signaldata.o: ../FP_Code/signaldata.cpp 

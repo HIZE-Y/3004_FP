@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QFile>
 #include "ui_graphwindow.h"
 #include "mainwindow.h"
 #include <random>
@@ -12,10 +13,9 @@ GraphWindow::GraphWindow(QWidget *parent) :
    , ui(new Ui::Form)
 {
     ui->setupUi(this);
+    QString filePathTwo = QCoreApplication::applicationDirPath() + "/history.txt";
+    m_logHistoryTwo.setFileName(filePathTwo);
     inputData();
-    QString filePath = QCoreApplication::applicationDirPath() + "/history2.txt";
-    qInfo()<< filePath;
-    m_logHistory.setFileName(filePath);
     //graphs pre
     QCustomPlot *compositeWaveformPlot = findChild<QCustomPlot*>("wavePlot10");
     QCustomPlot *compositeWaveformPlot2 = findChild<QCustomPlot*>("wavePlot10_2");
@@ -107,8 +107,8 @@ void GraphWindow::inputData(){
     fd[5] = math(signalArray6, 3);
     fd[6] = math(signalArray7, 3);
     treatment(fd);
-//    SignalData treaTeadtedData[3];
-    //treaTeadtedData[0]=SignalData(400,fd[2] );
+
+
     tsignalArray[0] = SignalData(signalArray[0].amplitude, fd1[0]);
     tsignalArray[1] = SignalData(signalArray[1].amplitude, fd2[0]);
     tsignalArray[2] = SignalData(signalArray[2].amplitude, fd3[0]);
@@ -157,7 +157,6 @@ void GraphWindow::inputData(){
 };
 
 void GraphWindow:: treatment(double t[]){
-    qInfo()<<"test";
     for (int i=0;i<7 ;i++ ) {
         fd1[i]=t[i]+0.1;
         fd2[i]= fd1[i]+0.1;
@@ -166,6 +165,8 @@ void GraphWindow:: treatment(double t[]){
     }
     log();
 }
+
+//setup and populate a graph
 void GraphWindow::setupCompositeWaveformPlot1(QCustomPlot *customPlot, SignalData *l) {
     // Generate some data for the composite waveform:
     QVector<double> x(1001), y(1001); // 1001 points for smoothness
@@ -203,7 +204,7 @@ double GraphWindow::math(SignalData t[], int size) {
 
     if (denominator == 0) {
         qWarning() << "Denominator is zero, cannot divide by zero.";
-        return -1; // Handle this error as appropriate
+        return -1;
     }
 
     return numerator / denominator;
@@ -211,20 +212,19 @@ double GraphWindow::math(SignalData t[], int size) {
 
 
 void GraphWindow::log(){
-    qInfo()<<"Hey";
-    if (m_logHistory.isOpen()) {
-            m_logHistory.close();
+    if (m_logHistoryTwo.isOpen()) {
+            m_logHistoryTwo.close();
+
         }
 
     QFile file("history.txt");
-   if (!m_logHistory.open(QIODevice::Append | QIODevice::Text | QIODevice::ReadOnly )){
-           qDebug() << "Failed to open" << m_logHistory.errorString();
+   if (!m_logHistoryTwo.open(QIODevice::Append | QIODevice::Text)){
+           qDebug() << "Failed to open GraphWindow" << m_logHistoryTwo.errorString();
        }
-   qInfo()<<"added to the history log";
+
    for (int i=0;i<7 ;i++ ) {
-       //qInfo()<<"test"<<fd[i];
-       QString sessionEntry = "the result of the session that you start it at: Intial FD:"+QString::number(fd[i])+"After treatment:"+QString::number(fTd[i])+"\n";
-       QTextStream out(&m_logHistory);
+       QString sessionEntry = "Intial FD:"+QString::number(fd[i])+"  After treatment:"+QString::number(fTd[i])+"\n";
+       QTextStream out(&m_logHistoryTwo);
        out << sessionEntry;
    }
 

@@ -50,6 +50,7 @@ public:
     QLabel *lightIndicatorRed;
     QLabel *lightIndicatorBlue;
     QLabel *lightIndicatorGreen;
+    QPushButton *clearHistory;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -263,8 +264,7 @@ public:
 "    padding: 10px;                   /* Ample padding around the text */\n"
 "    text-align: center;              /* Center-align text */\n"
 "\n"
-"    /* Text shadow for a subtle embossed look */\n"
-"    text-shadow: 1px 1px 1px #505050;\n"
+"\n"
 "\n"
 "    /* Subtle gradient background for a touch of sophistication */\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,\n"
@@ -283,8 +283,7 @@ public:
 "    padding: 10px;                   /* Ample padding around the text */\n"
 "    text-align: center;              /* Center-align text */\n"
 "\n"
-"    /* Text shadow for a subtle embossed look */\n"
-"    text-shadow: 1px 1px 1px #505050;\n"
+"\n"
 "\n"
 "    /* Subtle gradient background for a touch of sophistication */\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,\n"
@@ -307,8 +306,7 @@ public:
 "    padding: 10px;                   /* Ample padding around the text */\n"
 "    text-align: center;              /* Center-align text */\n"
 "\n"
-"    /* Text shadow for a subtle embossed look */\n"
-"    text-shadow: 1px 1px 1px #505050;\n"
+" \n"
 "\n"
 "    /* Subtle gradient background for a touch of sophistication */\n"
 "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,\n"
@@ -350,6 +348,9 @@ public:
 
         verticalLayout->addWidget(lightIndicatorGreen);
 
+        clearHistory = new QPushButton(centralwidget);
+        clearHistory->setObjectName(QString::fromUtf8("clearHistory"));
+        clearHistory->setGeometry(QRect(790, 210, 83, 25));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -380,6 +381,7 @@ public:
         lightIndicatorRed->setText(QString());
         lightIndicatorBlue->setText(QString());
         lightIndicatorGreen->setText(QString());
+        clearHistory->setText(QCoreApplication::translate("MainWindow", "clearHistory", nullptr));
     } // retranslateUi
 
 };

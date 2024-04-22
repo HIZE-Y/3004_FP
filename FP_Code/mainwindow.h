@@ -36,14 +36,12 @@ private slots:
     void resume();
     void disconnect();
     void updateProgressBar();
-    void inputData();
     void updateLightIndicator(const QString &color, bool);
-    double math(SignalData array[], int size);
-    void treatment(double t[]);
     void handleFlash();
+    void clearHistory();
 
     void countDownF();
-   // void afterTreatment(QCustomPlot *customPlot);
+
 
     void handleRedFlash();
 
@@ -67,32 +65,23 @@ private:
     int flashCount;
     int redFlashCount;
     QTimer *flash;
-//<<<<<<< HEAD
-    SignalData signalArray[3];      // Array for one type of signal
-     SignalData signalArray2[3];     // Another array for a different type
+
+    SignalData signalArray[3];
+     SignalData signalArray2[3];
      SignalData signalArray3[3];
-     SignalData signalArray4[3];      // Array for one type of signal
-      SignalData signalArray5[3];     // Another array for a different type
-      SignalData signalArray6[3];
+     SignalData signalArray4[3];
+     SignalData signalArray5[3];
+     SignalData signalArray6[3];
      SignalData signalArray7[3];
 
-
-
-
-     SignalData tsignalArray[4];      // Array for one type of signal
-     SignalData tsignalArray2[4];     // Another array for a different type
+     SignalData tsignalArray[4];
+     SignalData tsignalArray2[4];
      SignalData tsignalArray3[4];
-     SignalData tsignalArray4[4];      // Array for one type of signal
-     SignalData tsignalArray5[4];     // Another array for a different type
+     SignalData tsignalArray4[4];
+     SignalData tsignalArray5[4];
      SignalData tsignalArray6[4];
-      SignalData tsignalArray7[4];
-//    SignalData treaTeadtedData;
-//    SignalData treaTeadtedData2;
-//    SignalData treaTeadtedData3;
-//    SignalData treaTeadtedData4;
-//    SignalData treaTeadtedData5;
-//    SignalData treaTeadtedData6;
-//    SignalData treaTeadtedData7;
+     SignalData tsignalArray7[4];
+
 
 
     QTimer *redFlash;
